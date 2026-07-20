@@ -1,0 +1,17 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.boost.xyz/v2/boost-api/fetch-boosts
+summary:
+  types: [none]
+  api_key_in: []
+  oauth2_flows: []
+schemes:
+  - name: public
+    type: none
+    detail: >
+      The Boost V2 read API (https://api-v2.boost.xyz) is public and requires no
+      authentication — no API key, bearer token, or OAuth. The docs' API examples
+      issue unauthenticated requests directly against the endpoint. State changes
+      occur on-chain (wallet-signed transactions) via the protocol contracts and
+      SDK, not through authenticated REST calls.
+    sources: [openapi/boost-v2-openapi.json]
