@@ -1,0 +1,1141 @@
+openapi: 3.1.0
+info:
+  title: Boost V2 Action Action Template API
+  description: Get Boosts and sign claims for the Boost Validator
+  termsOfService: https://rabbithole-assets.s3.amazonaws.com/BoostStudios_Terms_Of_Service.pdf
+  contact:
+    url: https://airtable.com/appPys6nAx8smVpTA/shrqpPGsDx2W6oY24
+    email: support@boost.xyz
+  version: 2.0.0
+servers:
+- url: https://api-v2.boost.xyz
+  description: Boost V2
+tags:
+- name: Action Template
+paths:
+  /action-templates:
+    get:
+      operationId: getActionTemplates
+      summary: Get all Action Templates
+      description: Returns all known Action Templates that can aid in initializing new Boost Actions and Incentives, with information about project smart contract deployments, event and function signatures, claimant configuration information, and placeholder reward configuration.
+      tags:
+      - Action Template
+      parameters:
+      - schema:
+          type: string
+          description: Filter by budget account address
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        name: address
+        in: query
+      - schema:
+          type: boolean
+          default: true
+          description: 'Only return active templates (default: true)'
+        required: false
+        name: onlyActive
+        in: query
+      - schema:
+          type: string
+          description: Filter by template status(es). Accepts a single status or comma-separated list.
+          example: approved,pending
+        required: false
+        name: status
+        in: query
+      responses:
+        '200':
+          description: Returns a list of all Action Templates registered to the system
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    actionTemplate:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: An arbitrary UUID uniquely identifying each Action Template
+                        actionType:
+                          type: string
+                          description: A readable slug representing the type of action that must be taken in order to be eligible for a Boost claim, like "mint", or "create-any-token", or "buy-specific-token"
+                          example: mint
+                        projectId:
+                          type: string
+                          description: A readable slug representing the name of a project known to the Boost API, like "zora", or "coinboost"
+                          example: zora
+                        description:
+                          type: string
+                          description: Human readable text describing the action that must be taken in order to be eligible for a Boost claim
+                          example: Reward any who buys a specific ERC-20 token on Zora
+                        title:
+                          type: string
+                          description: Brief human readable text describing the action that must be taken in order to be eligible for a Boost claim
+                          example: Buy a specific token
+                        boostConfig:
+                          type: object
+                          properties:
+                            selectedContract:
+                              type: object
+                              properties:
+                                ID:
+                                  type: string
+                                  description: 'A system ID of the format: "eth:chainId:contractAddress" representing the smart contract that a Boost Action needs to target'
+                                  example: eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3
+                                contract_name:
+                                  type: string
+                                  description: The contract's name from the original ABI
+                                address:
+                                  type: string
+                                  description: The address of the deployed contract
+                                  example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                deployment_information:
+                                  type: object
+                                  properties:
+                                    address:
+                                      type: string
+                                      description: The address of the deployed contract
+                                      example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                      pattern: ^0x[a-fA-F0-9]{40}$
+                                    network_id:
+                                      type: string
+                                      description: The chain ID of the deployed contract
+                                      example: '8453'
+                                  required:
+                                  - address
+                                  - network_id
+                              required:
+                              - ID
+                              - contract_name
+                              - address
+                              - deployment_information
+                            selectedSignatureHash:
+                              type: string
+                              description: ''
+                              example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                            selectedSignature:
+                              type: string
+                              description: The human readable event or function signature
+                              example: event CoinCreated(address indexed caller, address indexed payoutRecipient, address indexed platformReferrer, address currency, string uri, string name, string symbol, address coin, address pool, string version)
+                            parameterFilters:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    description: A unix timestamp when this was added
+                                  parameter:
+                                    type: string
+                                    description: 'A string representing the name of the argument and the index of the argument, for example: "to:1"'
+                                    example: to:1
+                                  comparator:
+                                    type: string
+                                    description: 'When validating a claim, how should we compare equality, for example: ">", "<", "==", etc.'
+                                    example: ==
+                                  value:
+                                    type: string
+                                    description: The value to compare the parameter to using associated comparator and parameter
+                                  tupleParameter:
+                                    type: string
+                                    description: 'DEPRECATED: Use tupleParameters instead. Legacy field for single-level tuple support.'
+                                    deprecated: true
+                                  tupleParameters:
+                                    type: array
+                                    items:
+                                      type: string
+                                    description: 'Array of tuple parameter names for nested tuple support. Single level: ["field1:1"], Nested: ["field1:1", "nestedField:0", "deepField:2"]'
+                                    example:
+                                    - field1:1
+                                required:
+                                - id
+                                - parameter
+                                - comparator
+                                - value
+                              description: An array of function parameter details describing parameters of note, and comparators for the Boost Protocol to use when evaluating claims
+                            logFilters:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    description: ''
+                                  contract:
+                                    type:
+                                    - object
+                                    - 'null'
+                                    properties:
+                                      ID:
+                                        type: string
+                                        description: 'A system ID of the format: "eth:chainId:contractAddress" representing the smart contract that a Boost Action needs to target'
+                                        example: eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3
+                                      contract_name:
+                                        type: string
+                                        description: The contract's name from the original ABI
+                                      address:
+                                        type: string
+                                        description: The address of the deployed contract
+                                        example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                        pattern: ^0x[a-fA-F0-9]{40}$
+                                      deployment_information:
+                                        type: object
+                                        properties:
+                                          address:
+                                            type: string
+                                            description: The address of the deployed contract
+                                            example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                            pattern: ^0x[a-fA-F0-9]{40}$
+                                          network_id:
+                                            type: string
+                                            description: The chain ID of the deployed contract
+                                            example: '8453'
+                                        required:
+                                        - address
+                                        - network_id
+                                    required:
+                                    - ID
+                                    - contract_name
+                                    - address
+                                    - deployment_information
+                                    description: The contract address to filter on
+                                  signatureHash:
+                                    type: string
+                                    description: ''
+                                    example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                                  signature:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The event signature to filter on. Must be in event-definition format (see example)
+                                    example: event Transfer(address indexed from, address indexed to, uint256 amount)
+                                  parameters:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          description: A unix timestamp when this was added
+                                        parameter:
+                                          type: string
+                                          description: 'A string representing the name of the argument and the index of the argument, for example: "to:1"'
+                                          example: to:1
+                                        comparator:
+                                          type: string
+                                          description: 'When validating a claim, how should we compare equality, for example: ">", "<", "==", etc.'
+                                          example: ==
+                                        value:
+                                          type: string
+                                          description: The value to compare the parameter to using associated comparator and parameter
+                                        tupleParameter:
+                                          type: string
+                                          description: 'DEPRECATED: Use tupleParameters instead. Legacy field for single-level tuple support.'
+                                          deprecated: true
+                                        tupleParameters:
+                                          type: array
+                                          items:
+                                            type: string
+                                          description: 'Array of tuple parameter names for nested tuple support. Single level: ["field1:1"], Nested: ["field1:1", "nestedField:0", "deepField:2"]'
+                                          example:
+                                          - field1:1
+                                      required:
+                                      - id
+                                      - parameter
+                                      - comparator
+                                      - value
+                                    description: An array of function parameter details
+                                required:
+                                - id
+                                - contract
+                                - signature
+                                - parameters
+                            selectedAbiItem:
+                              type: object
+                              description: The original function or event AbiItem for the action that must be completed in order to be eligible to complete a Boost
+                            claimantContract:
+                              type: object
+                              properties:
+                                ID:
+                                  type: string
+                                  description: 'A system ID of the format: "eth:chainId:contractAddress" representing the smart contract where a Boost can derive information on who''s eligible to claim'
+                                  example: eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3
+                                contract_name:
+                                  type: string
+                                  description: The original name of the smart contract from its ABI
+                                  example: ZoraTimedSaleStrategy
+                                address:
+                                  type: string
+                                  description: The address of the smart contract
+                                  example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                deployment_information:
+                                  type: object
+                                  properties:
+                                    address:
+                                      type: string
+                                      description: The address of the deployed smart contract
+                                      example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                      pattern: ^0x[a-fA-F0-9]{40}$
+                                    network_id:
+                                      type: string
+                                      description: The chain ID where the smart contract is deployed
+                                      example: '7777777'
+                                  required:
+                                  - address
+                                  - network_id
+                                  description: An object specifying how to configure the Action claimant when creating a new Boost
+                              required:
+                              - ID
+                              - contract_name
+                              - address
+                              - deployment_information
+                            claimantSignatureHash:
+                              type: string
+                              description: ''
+                              example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                            claimantSignature:
+                              type: string
+                              description: ''
+                              example: function mint(address mintTo, uint256 quantity, address collection, uint256 tokenId, address mintReferral, string comment) payable
+                            claimantParameterMapping:
+                              type: string
+                              description: The name of the event or function argument representing how to derive the address of the person eligible for the claim
+                              example: mintTo
+                            reward:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - fixed
+                                  - usd-pegged
+                                  - eth-pegged
+                                  - transaction-value
+                                  - variable-criteria
+                                  - pegged-variable-criteria
+                                  - usd-pegged-variable-criteria
+                                  description: A system enum representing the type of incentive to bootstrap creation with
+                                  example: pegged-variable-criteria
+                                budget:
+                                  type: string
+                                  description: A placeholder Budget account address, if it exists
+                                amount:
+                                  type: string
+                                  description: A placeholder reward amount, if it exists
+                                rebatePercentage:
+                                  type: number
+                                  description: A placeholder percentage to peg the reward amount to
+                                peg:
+                                  anyOf:
+                                  - type: string
+                                    description: Ethereum address
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  - type: string
+                                  description: The address of the pegged token, or a dynamic reference like "buyToken:2" that will be resolved from parameter filters.
+                                  example: 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 or "buyToken:2"
+                              required:
+                              - budget
+                              - amount
+                              - rebatePercentage
+                              description: An object specifying placeholder values to use when initializing Boost Incentives when creating a Boost
+                            criteria:
+                              type: object
+                              properties:
+                                signature:
+                                  type: string
+                                  description: The hexadecimal event signature for variable criteria rewards
+                                  example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                                valueType:
+                                  type: number
+                                  description: A numeric identifier for the data type of the target value
+                                fieldIndex:
+                                  type: number
+                                  description: The index of the field to use for variable criteria evaluation
+                                criteriaType:
+                                  type: number
+                                  description: A numeric identifier for the type of criteria evaluation to perform
+                                targetContract:
+                                  type: string
+                                  description: Contract address for criteria evaluation
+                              required:
+                              - signature
+                              - valueType
+                              - fieldIndex
+                              - criteriaType
+                              - targetContract
+                              description: Configuration for variable criteria reward calculation
+                            rewardMultiplier:
+                              type: string
+                              pattern: ^\d+$
+                              description: A multiplier value for reward calculations
+                              example: '4000000000000'
+                            distributionChannel:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - public
+                                - farcaster
+                                - worldcoin
+                                - celo
+                                - rabbithole
+                              description: Array of distribution channels where this action template is available
+                          required:
+                          - selectedContract
+                          - selectedSignature
+                          - parameterFilters
+                          - logFilters
+                          - claimantContract
+                          - claimantSignature
+                          - claimantParameterMapping
+                          - reward
+                          description: An object containing information on how to interact with a project's smart contract as to be eligible for a Boost claim. Details include the target contract, ABI, function signature, event signature, and reward template information that can be used when configuring a Boost Action when creating a new Boost.
+                        nameConfig:
+                          type: object
+                          properties:
+                            template:
+                              type: string
+                              description: A template string representing how to dynamically name a Boost on creation
+                            boostNameGenerator:
+                              type: string
+                              description: An internal system enum defining the function to call to generate the display name
+                            abiFilters:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  signature:
+                                    type: string
+                                    description: A hexadecimal string representing the function or event selector. This string will always start with 0x, and end with the 32 byte selector. If selector is a function, then the 4 byte signature will be left padded with zeroes to 32 bytes.
+                                    example: '0x00000000000000000000000000000000000000000000000000000000a836f32f'
+                                  inputArgIndexes:
+                                    type: array
+                                    items:
+                                      type: number
+                                    description: 'The indexes of the arguments in the function or event signature to take into account when specifying the action to be '
+                                  inputArgValues:
+                                    type: array
+                                    items:
+                                      type: string
+                                    description: Optional array of expected values at each index. Empty string means any value. Must be same length as inputArgIndexes.
+                                  targetContract:
+                                    type: string
+                                    description: Optional contract address that must emit this event or have this function called on it
+                                required:
+                                - signature
+                                - inputArgIndexes
+                              description: A list of objects containing information on event or function selectors that define the action that must be taken in order to be eligible to claim a Boost
+                          required:
+                          - template
+                          - boostNameGenerator
+                          - abiFilters
+                          description: An object containing information on how to derive a human readable name from a Boost configuration. Also includes the hexadecimal function or event signature for the action that must be taken to be eligible for a Boost claim.
+                        isActive:
+                          type: boolean
+                          description: Whether this action template is currently active and available for use
+                        urlTemplate:
+                          type:
+                          - string
+                          - 'null'
+                          description: URL template for generating project-specific links, with placeholders for dynamic values
+                        allowlist:
+                          type: array
+                          items:
+                            type: string
+                            description: Ethereum address
+                            example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                            pattern: ^0x[a-fA-F0-9]{40}$
+                          description: Array of Ethereum addresses that are allowed to use this action template. If empty, the template is available to everyone.
+                        distributionChannel:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - public
+                            - farcaster
+                            - worldcoin
+                            - celo
+                            - rabbithole
+                          description: Array of distribution channels where this action template is available
+                        verificationLevel:
+                          type:
+                          - string
+                          - 'null'
+                          description: Verification level needed for an action template
+                        builderMetadata:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            txHash:
+                              type: string
+                              description: Transaction hash used to generate the template
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: ISO timestamp for when the template was created
+                            actionChain:
+                              type: integer
+                              description: Chain ID where the action transaction occurred
+                            description:
+                              type: string
+                              description: Optional description provided for the template
+                            budgetAccount:
+                              type: object
+                              properties:
+                                chainId:
+                                  type: integer
+                                  description: Chain ID where the budget account is deployed
+                                address:
+                                  type: string
+                                  description: Budget account address that created the template
+                                  example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                              required:
+                              - chainId
+                              - address
+                              description: Budget account that created the template
+                            contactInfo:
+                              type: string
+                              description: Optional contact information for the template creator
+                            projectUrl:
+                              type: string
+                              format: uri
+                              description: Project URL submitted by template creator (template-level, populated server-side)
+                            projectIconUrl:
+                              type: string
+                              format: uri
+                              description: S3 URL of project icon uploaded by template creator (populated server-side)
+                            isProjectCreator:
+                              type: boolean
+                              description: True if this template created the project entry, false if project already existed (populated server-side)
+                          required:
+                          - createdAt
+                          - actionChain
+                          - budgetAccount
+                          description: Metadata about who created the template and how
+                        status:
+                          type: string
+                          enum:
+                          - pending
+                          - approved
+                          - rejected
+                          - duplicated
+                          description: The approval status of the template
+                        category:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - defi
+                          - nft
+                          - gaming
+                          - social
+                          - bridge
+                          - governance
+                          - payments
+                          - other
+                          description: The category of the boost action
+                      required:
+                      - id
+                      - actionType
+                      - description
+                      - title
+                      - boostConfig
+                      - nameConfig
+                      - isActive
+                      - urlTemplate
+                      - allowlist
+                      - distributionChannel
+                      - verificationLevel
+                      - builderMetadata
+                      - status
+                      - category
+                    project:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A readable slug representing the name of a project known to the Boost API, like "zora", or "coinboost"
+                          example: zora
+                        url:
+                          type: string
+                          description: URL of the project's homepage
+                        icon:
+                          type: string
+                          description: An image URI that can be used when presenting information about the project
+                      required:
+                      - id
+                      - url
+                      - icon
+                  required:
+                  - actionTemplate
+                  - project
+  /action-templates/:id:
+    get:
+      operationId: getActionTemplate
+      summary: Get an Action Template by actionTemplateId
+      description: Returns an Action Template by actionTemplateId
+      tags:
+      - Action Template
+      responses:
+        '200':
+          description: Returns a specific Action Template by actionTemplateId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  actionTemplate:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: An arbitrary UUID uniquely identifying each Action Template
+                      actionType:
+                        type: string
+                        description: A readable slug representing the type of action that must be taken in order to be eligible for a Boost claim, like "mint", or "create-any-token", or "buy-specific-token"
+                        example: mint
+                      projectId:
+                        type: string
+                        description: A readable slug representing the name of a project known to the Boost API, like "zora", or "coinboost"
+                        example: zora
+                      description:
+                        type: string
+                        description: Human readable text describing the action that must be taken in order to be eligible for a Boost claim
+                        example: Reward any who buys a specific ERC-20 token on Zora
+                      title:
+                        type: string
+                        description: Brief human readable text describing the action that must be taken in order to be eligible for a Boost claim
+                        example: Buy a specific token
+                      boostConfig:
+                        type: object
+                        properties:
+                          selectedContract:
+                            type: object
+                            properties:
+                              ID:
+                                type: string
+                                description: 'A system ID of the format: "eth:chainId:contractAddress" representing the smart contract that a Boost Action needs to target'
+                                example: eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3
+                              contract_name:
+                                type: string
+                                description: The contract's name from the original ABI
+                              address:
+                                type: string
+                                description: The address of the deployed contract
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                              deployment_information:
+                                type: object
+                                properties:
+                                  address:
+                                    type: string
+                                    description: The address of the deployed contract
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  network_id:
+                                    type: string
+                                    description: The chain ID of the deployed contract
+                                    example: '8453'
+                                required:
+                                - address
+                                - network_id
+                            required:
+                            - ID
+                            - contract_name
+                            - address
+                            - deployment_information
+                          selectedSignatureHash:
+                            type: string
+                            description: ''
+                            example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                          selectedSignature:
+                            type: string
+                            description: The human readable event or function signature
+                            example: event CoinCreated(address indexed caller, address indexed payoutRecipient, address indexed platformReferrer, address currency, string uri, string name, string symbol, address coin, address pool, string version)
+                          parameterFilters:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: A unix timestamp when this was added
+                                parameter:
+                                  type: string
+                                  description: 'A string representing the name of the argument and the index of the argument, for example: "to:1"'
+                                  example: to:1
+                                comparator:
+                                  type: string
+                                  description: 'When validating a claim, how should we compare equality, for example: ">", "<", "==", etc.'
+                                  example: ==
+                                value:
+                                  type: string
+                                  description: The value to compare the parameter to using associated comparator and parameter
+                                tupleParameter:
+                                  type: string
+                                  description: 'DEPRECATED: Use tupleParameters instead. Legacy field for single-level tuple support.'
+                                  deprecated: true
+                                tupleParameters:
+                                  type: array
+                                  items:
+                                    type: string
+                                  description: 'Array of tuple parameter names for nested tuple support. Single level: ["field1:1"], Nested: ["field1:1", "nestedField:0", "deepField:2"]'
+                                  example:
+                                  - field1:1
+                              required:
+                              - id
+                              - parameter
+                              - comparator
+                              - value
+                            description: An array of function parameter details describing parameters of note, and comparators for the Boost Protocol to use when evaluating claims
+                          logFilters:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: ''
+                                contract:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    ID:
+                                      type: string
+                                      description: 'A system ID of the format: "eth:chainId:contractAddress" representing the smart contract that a Boost Action needs to target'
+                                      example: eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3
+                                    contract_name:
+                                      type: string
+                                      description: The contract's name from the original ABI
+                                    address:
+                                      type: string
+                                      description: The address of the deployed contract
+                                      example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                      pattern: ^0x[a-fA-F0-9]{40}$
+                                    deployment_information:
+                                      type: object
+                                      properties:
+                                        address:
+                                          type: string
+                                          description: The address of the deployed contract
+                                          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                          pattern: ^0x[a-fA-F0-9]{40}$
+                                        network_id:
+                                          type: string
+                                          description: The chain ID of the deployed contract
+                                          example: '8453'
+                                      required:
+                                      - address
+                                      - network_id
+                                  required:
+                                  - ID
+                                  - contract_name
+                                  - address
+                                  - deployment_information
+                                  description: The contract address to filter on
+                                signatureHash:
+                                  type: string
+                                  description: ''
+                                  example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                                signature:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: The event signature to filter on. Must be in event-definition format (see example)
+                                  example: event Transfer(address indexed from, address indexed to, uint256 amount)
+                                parameters:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        description: A unix timestamp when this was added
+                                      parameter:
+                                        type: string
+                                        description: 'A string representing the name of the argument and the index of the argument, for example: "to:1"'
+                                        example: to:1
+                                      comparator:
+                                        type: string
+                                        description: 'When validating a claim, how should we compare equality, for example: ">", "<", "==", etc.'
+                                        example: ==
+                                      value:
+                                        type: string
+                                        description: The value to compare the parameter to using associated comparator and parameter
+                                      tupleParameter:
+                                        type: string
+                                        description: 'DEPRECATED: Use tupleParameters instead. Legacy field for single-level tuple support.'
+                                        deprecated: true
+                                      tupleParameters:
+                                        type: array
+                                        items:
+                                          type: string
+                                        description: 'Array of tuple parameter names for nested tuple support. Single level: ["field1:1"], Nested: ["field1:1", "nestedField:0", "deepField:2"]'
+                                        example:
+                                        - field1:1
+                                    required:
+                                    - id
+                                    - parameter
+                                    - comparator
+                                    - value
+                                  description: An array of function parameter details
+                              required:
+                              - id
+                              - contract
+                              - signature
+                              - parameters
+                          selectedAbiItem:
+                            type: object
+                            description: The original function or event AbiItem for the action that must be completed in order to be eligible to complete a Boost
+                          claimantContract:
+                            type: object
+                            properties:
+                              ID:
+                                type: string
+                                description: 'A system ID of the format: "eth:chainId:contractAddress" representing the smart contract where a Boost can derive information on who''s eligible to claim'
+                                example: eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3
+                              contract_name:
+                                type: string
+                                description: The original name of the smart contract from its ABI
+                                example: ZoraTimedSaleStrategy
+                              address:
+                                type: string
+                                description: The address of the smart contract
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                              deployment_information:
+                                type: object
+                                properties:
+                                  address:
+                                    type: string
+                                    description: The address of the deployed smart contract
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  network_id:
+                                    type: string
+                                    description: The chain ID where the smart contract is deployed
+                                    example: '7777777'
+                                required:
+                                - address
+                                - network_id
+                                description: An object specifying how to configure the Action claimant when creating a new Boost
+                            required:
+                            - ID
+                            - contract_name
+                            - address
+                            - deployment_information
+                          claimantSignatureHash:
+                            type: string
+                            description: ''
+                            example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                          claimantSignature:
+                            type: string
+                            description: ''
+                            example: function mint(address mintTo, uint256 quantity, address collection, uint256 tokenId, address mintReferral, string comment) payable
+                          claimantParameterMapping:
+                            type: string
+                            description: The name of the event or function argument representing how to derive the address of the person eligible for the claim
+                            example: mintTo
+                          reward:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - fixed
+                                - usd-pegged
+                                - eth-pegged
+                                - transaction-value
+                                - variable-criteria
+                                - pegged-variable-criteria
+                                - usd-pegged-variable-criteria
+                                description: A system enum representing the type of incentive to bootstrap creation with
+                                example: pegged-variable-criteria
+                              budget:
+                                type: string
+                                description: A placeholder Budget account address, if it exists
+                              amount:
+                                type: string
+                                description: A placeholder reward amount, if it exists
+                              rebatePercentage:
+                                type: number
+                                description: A placeholder percentage to peg the reward amount to
+                              peg:
+                                anyOf:
+                                - type: string
+                                  description: Ethereum address
+                                  example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                - type: string
+                                description: The address of the pegged token, or a dynamic reference like "buyToken:2" that will be resolved from parameter filters.
+                                example: 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 or "buyToken:2"
+                            required:
+                            - budget
+                            - amount
+                            - rebatePercentage
+                            description: An object specifying placeholder values to use when initializing Boost Incentives when creating a Boost
+                          criteria:
+                            type: object
+                            properties:
+                              signature:
+                                type: string
+                                description: The hexadecimal event signature for variable criteria rewards
+                                example: '0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e'
+                              valueType:
+                                type: number
+                                description: A numeric identifier for the data type of the target value
+                              fieldIndex:
+                                type: number
+                                description: The index of the field to use for variable criteria evaluation
+                              criteriaType:
+                                type: number
+                                description: A numeric identifier for the type of criteria evaluation to perform
+                              targetContract:
+                                type: string
+                                description: Contract address for criteria evaluation
+                            required:
+                            - signature
+                            - valueType
+                            - fieldIndex
+                            - criteriaType
+                            - targetContract
+                            description: Configuration for variable criteria reward calculation
+                          rewardMultiplier:
+                            type: string
+                            pattern: ^\d+$
+                            description: A multiplier value for reward calculations
+                            example: '4000000000000'
+                          distributionChannel:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                              - public
+                              - farcaster
+                              - worldcoin
+                              - celo
+                              - rabbithole
+                            description: Array of distribution channels where this action template is available
+                        required:
+                        - selectedContract
+                        - selectedSignature
+                        - parameterFilters
+                        - logFilters
+                        - claimantContract
+                        - claimantSignature
+                        - claimantParameterMapping
+                        - reward
+                        description: An object containing information on how to interact with a project's smart contract as to be eligible for a Boost claim. Details include the target contract, ABI, function signature, event signature, and reward template information that can be used when configuring a Boost Action when creating a new Boost.
+                      nameConfig:
+                        type: object
+                        properties:
+                          template:
+                            type: string
+                            description: A template string representing how to dynamically name a Boost on creation
+                          boostNameGenerator:
+                            type: string
+                            description: An internal system enum defining the function to call to generate the display name
+                          abiFilters:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                signature:
+                                  type: string
+                                  description: A hexadecimal string representing the function or event selector. This string will always start with 0x, and end with the 32 byte selector. If selector is a function, then the 4 byte signature will be left padded with zeroes to 32 bytes.
+                                  example: '0x00000000000000000000000000000000000000000000000000000000a836f32f'
+                                inputArgIndexes:
+                                  type: array
+                                  items:
+                                    type: number
+                                  description: 'The indexes of the arguments in the function or event signature to take into account when specifying the action to be '
+                                inputArgValues:
+                                  type: array
+                                  items:
+                                    type: string
+                                  description: Optional array of expected values at each index. Empty string means any value. Must be same length as inputArgIndexes.
+                                targetContract:
+                                  type: string
+                                  description: Optional contract address that must emit this event or have this function called on it
+                              required:
+                              - signature
+                              - inputArgIndexes
+                            description: A list of objects containing information on event or function selectors that define the action that must be taken in order to be eligible to claim a Boost
+                        required:
+                        - template
+                        - boostNameGenerator
+                        - abiFilters
+                        description: An object containing information on how to derive a human readable name from a Boost configuration. Also includes the hexadecimal function or event signature for the action that must be taken to be eligible for a Boost claim.
+                      isActive:
+                        type: boolean
+                        description: Whether this action template is currently active and available for use
+                      urlTemplate:
+                        type:
+                        - string
+                        - 'null'
+                        description: URL template for generating project-specific links, with placeholders for dynamic values
+                      allowlist:
+                        type: array
+                        items:
+                          type: string
+                          description: Ethereum address
+                          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                        description: Array of Ethereum addresses that are allowed to use this action template. If empty, the template is available to everyone.
+                      distributionChannel:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - public
+                          - farcaster
+                          - worldcoin
+                          - celo
+                          - rabbithole
+                        description: Array of distribution channels where this action template is available
+                      verificationLevel:
+                        type:
+                        - string
+                        - 'null'
+                        description: Verification level needed for an action template
+                      builderMetadata:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          txHash:
+                            type: string
+                            description: Transaction hash used to generate the template
+                          createdAt:
+                            type: string
+                            format: date-time
+                            description: ISO timestamp for when the template was created
+                          actionChain:
+                            type: integer
+                            description: Chain ID where the action transaction occurred
+                          description:
+                            type: string
+                            description: Optional description provided for the template
+                          budgetAccount:
+                            type: object
+                            properties:
+                              chainId:
+                                type: integer
+                                description: Chain ID where the budget account is deployed
+                              address:
+                                type: string
+                                description: Budget account address that created the template
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                            required:
+                            - chainId
+                            - address
+                            description: Budget account that created the template
+                          contactInfo:
+                            type: string
+                            description: Optional contact information for the template creator
+                          projectUrl:
+                            type: string
+                            format: uri
+                            description: Project URL submitted by template creator (template-level, populated server-side)
+                          projectIconUrl:
+                            type: string
+                            format: uri
+                            description: S3 URL of project icon uploaded by template creator (populated server-side)
+                          isProjectCreator:
+                            type: boolean
+                            description: True if this template created the project entry, false if project already existed (populated server-side)
+                        required:
+                        - createdAt
+                        - actionChain
+                        - budgetAccount
+                        description: Metadata about who created the template and how
+                      status:
+                        type: string
+                        enum:
+                        - pending
+                        - approved
+                        - rejected
+                        - duplicated
+                        description: The approval status of the template
+                      category:
+                        type:
+                        - string
+                        - 'null'
+                        enum:
+                        - defi
+                        - nft
+                        - gaming
+                        - social
+                        - bridge
+                        - governance
+                        - payments
+                        - other
+                        description: The category of the boost action
+                    required:
+                    - id
+                    - actionType
+                    - description
+                    - title
+                    - boostConfig
+                    - nameConfig
+                    - isActive
+                    - urlTemplate
+                    - allowlist
+                    - distributionChannel
+                    - verificationLevel
+                    - builderMetadata
+                    - status
+                    - category
+                  project:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: A readable slug representing the name of a project known to the Boost API, like "zora", or "coinboost"
+                        example: zora
+                      url:
+                        type: string
+                        description: URL of the project's homepage
+                      icon:
+                        type: string
+                        description: An image URI that can be used when presenting information about the project
+                    required:
+                    - id
+                    - url
+                    - icon
+                required:
+                - actionTemplate
+                - project
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    anyOf:
+                    - type: string
+                    - type: object
+                      properties:
+                        message:
+                          type: string
+                          description: Human readable message for error that occured
+                        code:
+                          type: number
+                          description: Error code for error that occured, will typically be the HTTP status code
+                      required:
+                      - message
+                    description: A generic error object that can be used to represent any error that occurs in the system.
+                required:
+                - error

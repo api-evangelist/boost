@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  title: Boost V2 Action Blocklist API
+  description: Get Boosts and sign claims for the Boost Validator
+  termsOfService: https://rabbithole-assets.s3.amazonaws.com/BoostStudios_Terms_Of_Service.pdf
+  contact:
+    url: https://airtable.com/appPys6nAx8smVpTA/shrqpPGsDx2W6oY24
+    email: support@boost.xyz
+  version: 2.0.0
+servers:
+- url: https://api-v2.boost.xyz
+  description: Boost V2
+tags:
+- name: Blocklist
+paths:
+  /blocklist/:chainId/:tokenAddress:
+    get:
+      operationId: getBlocklist
+      parameters:
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          description: The chain ID to query
+        required: false
+        in: path
+        name: chainId
+      - schema:
+          type: string
+          description: The token address to query
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: true
+        in: path
+        name: tokenAddress
+      responses:
+        '200':
+          description: Returns whether or not the token is blocked on given chain id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isBlocked:
+                    type: boolean
+                    description: Is the token blocked?
+                required:
+                - isBlocked
+      tags:
+      - Blocklist

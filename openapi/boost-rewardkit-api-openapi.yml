@@ -1,0 +1,1990 @@
+openapi: 3.1.0
+info:
+  title: Boost V2 Action RewardKit API
+  description: Get Boosts and sign claims for the Boost Validator
+  termsOfService: https://rabbithole-assets.s3.amazonaws.com/BoostStudios_Terms_Of_Service.pdf
+  contact:
+    url: https://airtable.com/appPys6nAx8smVpTA/shrqpPGsDx2W6oY24
+    email: support@boost.xyz
+  version: 2.0.0
+servers:
+- url: https://api-v2.boost.xyz
+  description: Boost V2
+tags:
+- name: RewardKit
+paths:
+  /reward-kit/boosts:
+    get:
+      operationId: getRewardKitRewards
+      summary: Get a list of reward kit rewards
+      description: Accepts pagination, and filter options to return a list of rewards
+      tags:
+      - RewardKit
+      parameters:
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          default: 1
+          description: The desired page to return from the query
+        required: false
+        in: query
+        name: page
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          maximum: 100
+          default: 10
+          description: The amount of items to return from the query, defaults to 10, and must be <= 100
+        required: false
+        in: query
+        name: pageSize
+      - schema:
+          type: string
+          description: Filter boosts by budget account address(es). Accepts a single address or comma-separated list of addresses
+          example: 0x378632819f39c74c4f56b1429e760739c5fb51b7,0x1234567890123456789012345678901234567890
+        required: false
+        in: query
+        name: budgetAccount
+      - schema:
+          type: string
+          description: Filter boosts by a specific owner address
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: owner
+      - schema:
+          type: string
+          description: Filter boosts by a specific autoboost ID
+        required: false
+        in: query
+        name: autoboostId
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          description: Only retrieve Boosts for a specific chain ID. You must supply this parameter if also specifying `targetContract`
+        required: false
+        in: query
+        name: chainId
+      - schema:
+          type: string
+          description: Retrieve rewards configured with actions that target a specific contract i.e., Zora's address for all rewards that require a mint in order to claim a reward. If you supply this parameter, you must also supply chainId
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: targetContract
+      - schema:
+          type: string
+          description: Retrieve rewards configured with specific token addresses
+          example: chainId:tokenAddress,chainId:tokenAddress:collection,...
+        required: false
+        in: query
+        name: tokens
+      - schema:
+          type: string
+          description: Filter boosts by comma separated list of distribution channels
+          example: distributionChannel=public,farcaster
+        required: false
+        in: query
+        name: distributionChannel
+      - schema:
+          type: string
+          enum:
+          - active
+          - recently-deployed
+          description: Sort by active or recently deployed
+        required: false
+        in: query
+        name: sortBy
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Filter boosts by token whitelist
+        required: false
+        in: query
+        name: tokenWhitelist
+      - schema:
+          type: string
+          description: Filter rewards by the reward creator's address.
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: creatorAddress
+      - schema:
+          type: string
+          description: Filter rewards by the address of the claimant.
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: claimantAddress
+      - schema:
+          type: string
+          enum:
+          - active
+          - claimed
+          - claimable
+          default: claimable
+          description: Filter rewards by their status, either active, claimed, or claimable.
+        required: false
+        in: query
+        name: status
+      - schema:
+          description: 'Filter by the type of actions that must be taken to claim the reward, eg: "mint", "swap"'
+          example: swap,mint
+        required: false
+        name: actionType
+        in: query
+      - schema:
+          description: 'Exclude rewards with these action types, eg: "mint", "swap"'
+          example: mint,create-any-token
+        required: false
+        name: excludeActionType
+        in: query
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          description: Include token metadata (price, market cap, etc.) for applicable actions. Defaults to false.
+          example: true
+        required: false
+        in: query
+        name: includeTokenMetadata
+      responses:
+        '200':
+          description: Returns a list of RewardKit rewards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  boosts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The reward identifier in the form of "chainId:boostCoreAddress:identifier"
+                          example: 8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1
+                        chainId:
+                          type: number
+                          description: The chain id of the network where the reward is being offered
+                        incentives:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - AllowListIncentive
+                                - CGDAIncentive
+                                - ERC20Incentive
+                                - PointsIncentive
+                                - ERC20VariableIncentive
+                                - ERC20VariableCriteriaIncentive
+                                - ERC20VariableCriteriaIncentiveV2
+                                - ERC20PeggedIncentive
+                                - ERC20PeggedVariableCriteriaIncentive
+                                - ERC20PeggedVariableCriteriaIncentiveV2
+                                description: Human readable label for the incentive type
+                              assetAddress:
+                                type: string
+                                description: Address of the asset being rewarded
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                              rewardPercentage:
+                                type: number
+                                description: For variable criteria incentives, the percent as a whole number (0-100) of the signed claim amount the claimant will receive
+                                example: 50
+                              rebatePercentage:
+                                type: number
+                                description: 'Alias for rewardPercentage (for v2 parity). For variable criteria incentives, the rebate percentage as a whole number. Deprecated: use rewardPercentage instead.'
+                                example: 7
+                                deprecated: true
+                              rewardAmount:
+                                type: string
+                                description: For variable criteria incentives, the maximum amount that can be claimed in a single transaction. Otherwise, the fixed reward value. If reward is queried with a claimant address, and the user has performed the requisite claim action, and reward is in a claimable state, this will be the claimable amount.
+                              rewardAmountFormatted:
+                                type: string
+                                description: Formatted amount of reward tokens
+                              maxReward:
+                                type: string
+                                description: Maximum amount of reward tokens that can be claimed
+                              maxRewardUsdValue:
+                                type: number
+                                description: Approximate USD value of the maximum reward that can be claimed
+                              rewardUsdValue:
+                                type: number
+                                description: Approximate amount of USD that can be claimed
+                              tokenSymbol:
+                                type: string
+                                description: 'The symbol of the token being rewarded, ie: USDC'
+                              tokenImageUri:
+                                type: string
+                                description: A url for the token image
+                              metadata:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                    description: The system ID of the token
+                                  chainId:
+                                    type: number
+                                    description: The chain ID where this token is deployed
+                                  address:
+                                    type: string
+                                    description: The address of the token
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  decimals:
+                                    type: number
+                                    description: The number of decimal places for the token, typically 18
+                                  name:
+                                    type: string
+                                    description: The display name for the token
+                                  symbol:
+                                    type: string
+                                    description: The token's symbol, "DEGEN" for example
+                                  imageUri:
+                                    type: string
+                                    description: A URI pointing to an image representing the token
+                                required:
+                                - id
+                                - chainId
+                                - address
+                                - decimals
+                                - name
+                                - symbol
+                                - imageUri
+                                description: Additional metadata about the asset being rewarded
+                            required:
+                            - type
+                            description: An individual incentive that can be offered as part of a reward
+                          description: The incentives that can be claimed as part of the reward
+                        status:
+                          type: string
+                          enum:
+                          - active
+                          - claimed
+                          - claimable
+                          description: The status of the reward, either active, claimable, or claimed
+                        txHash:
+                          type: string
+                          description: The transaction hash of the reward
+                        boostName:
+                          type:
+                          - string
+                          - 'null'
+                          description: The status of the reward, either active, claimable, or claimed
+                        nftImageUri:
+                          type: string
+                          description: The url of an image to present along with the reward
+                        nftName:
+                          type: string
+                          description: The name of the NFT associated with the reward
+                        tokenImageUri:
+                          type: string
+                          description: The url of an individual token to present along with the reward
+                        blockTimestamp:
+                          type: string
+                          description: The block timestamp of the reward
+                        projectUrl:
+                          type: string
+                          format: uri
+                          description: The URL where users can view or interact with this reward's associated project
+                        actionTemplate:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The action template's system id
+                            projectId:
+                              type: string
+                              description: Human readable project name the action is designed for, eg. "zora"
+                            actionType:
+                              type: string
+                              description: 'Readable system type describing the type of action that must be taken to claim the reward, eg: "mint", "create-any-token"'
+                              example: mint
+                            projectImage:
+                              type: string
+                              description: A url for this action template's project image
+                            description:
+                              type:
+                              - string
+                              - 'null'
+                              description: A description of the action that must be taken to claim the reward
+                            category:
+                              type:
+                              - string
+                              - 'null'
+                              enum:
+                              - defi
+                              - nft
+                              - gaming
+                              - social
+                              - bridge
+                              - governance
+                              - payments
+                              - other
+                              description: 'The category of the boost action, eg: "defi", "nft", "gaming"'
+                              example: defi
+                          required:
+                          - id
+                          - projectId
+                          - actionType
+                          - projectImage
+                          description: An object containing information about the action that must be taken to claim the reward
+                        startTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: Start time of a boost
+                        endTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: End time of a boost
+                        claimCount:
+                          type: integer
+                          minimum: 0
+                          description: The total number of claims for this reward
+                        totalBudget:
+                          type: string
+                          description: The total budget allocated for this reward across all incentives, in the reward token's smallest unit
+                        rewardsDistributed:
+                          type: string
+                          description: The total amount of rewards distributed for this reward, in the reward token's smallest unit
+                        signature:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            claimant:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            incentiveId:
+                              type: integer
+                              minimum: 0
+                            signature:
+                              type: string
+                            referrer:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                          required:
+                          - claimant
+                          - incentiveId
+                          - signature
+                          - referrer
+                          description: The claim signature for the reward
+                        accessStatus:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - allowed
+                          - denied
+                          - not-allowed
+                          description: Determines the access status of the boost for a given address
+                        actionTokenMetadata:
+                          type: object
+                          properties:
+                            tokenSymbol:
+                              type: string
+                              description: The symbol of the token being swapped, e.g., "DEGEN"
+                            tokenContract:
+                              type: string
+                              description: The contract address of the token
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            tokenImage:
+                              type: string
+                              format: uri
+                              description: URL for the token image
+                            chainId:
+                              type: number
+                              description: The chain ID where the token exists
+                            decimals:
+                              type: number
+                              description: The number of decimals for the token
+                            marketCap:
+                              type: number
+                              description: Market capitalization in USD
+                            priceChange24Hr:
+                              type: number
+                              description: Price change percentage in the last 24 hours
+                            volume24Hr:
+                              type: number
+                              description: Trading volume in USD for the last 24 hours
+                            priceUsd:
+                              type: number
+                              description: Current price in USD
+                            holders:
+                              type: number
+                              description: Number of token holders
+                          required:
+                          - tokenSymbol
+                          - tokenContract
+                          - chainId
+                          description: Metadata for tokens, including price and market data
+                        verificationLevel:
+                          type:
+                          - string
+                          - 'null'
+                          description: Verification level required for boosts in the World ecosystem
+                        usdDistributed24Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last 24 hours
+                          example: 12345.67
+                        usdDistributed1Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last hour
+                          example: 1234.56
+                      required:
+                      - id
+                      - chainId
+                      - incentives
+                      - actionTemplate
+                      description: A single RewardKit reward, with incentives, and additional configuration
+                    description: A list of RewardKit rewards that match a filter criteria
+                required:
+                - boosts
+                description: The API response for a user's RewardKit rewards
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    anyOf:
+                    - type: string
+                    - type: object
+                      properties:
+                        message:
+                          type: string
+                          description: Human readable message for error that occured
+                        code:
+                          type: number
+                          description: Error code for error that occured, will typically be the HTTP status code
+                      required:
+                      - message
+                    description: A generic error object that can be used to represent any error that occurs in the system.
+                required:
+                - error
+  /reward-kit:
+    get:
+      operationId: getRewardKit
+      summary: Get a user's RewardKit profile
+      description: Returns a list of active, claimable, and unclaimed rewards for a given user.
+      tags:
+      - RewardKit
+      parameters:
+      - schema:
+          type: string
+          description: Filter boosts by budget account address(es). Accepts a single address or comma-separated list of addresses
+          example: 0x378632819f39c74c4f56b1429e760739c5fb51b7,0x1234567890123456789012345678901234567890
+        required: false
+        in: query
+        name: budgetAccount
+      - schema:
+          type: string
+          description: Filter boosts by a specific owner address
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: owner
+      - schema:
+          type: string
+          description: Filter boosts by a specific autoboost ID
+        required: false
+        in: query
+        name: autoboostId
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          description: Only retrieve Boosts for a specific chain ID. You must supply this parameter if also specifying `targetContract`
+        required: false
+        in: query
+        name: chainId
+      - schema:
+          type: string
+          description: Retrieve rewards configured with actions that target a specific contract i.e., Zora's address for all rewards that require a mint in order to claim a reward. If you supply this parameter, you must also supply chainId
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: targetContract
+      - schema:
+          type: string
+          description: Retrieve rewards configured with specific token addresses
+          example: chainId:tokenAddress,chainId:tokenAddress:collection,...
+        required: false
+        in: query
+        name: tokens
+      - schema:
+          type: string
+          description: Filter boosts by comma separated list of distribution channels
+          example: distributionChannel=public,farcaster
+        required: false
+        in: query
+        name: distributionChannel
+      - schema:
+          type: string
+          enum:
+          - active
+          - recently-deployed
+          description: Sort by active or recently deployed
+        required: false
+        in: query
+        name: sortBy
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Filter boosts by token whitelist
+        required: false
+        in: query
+        name: tokenWhitelist
+      - schema:
+          type: string
+          description: Filter rewards by a reward's creator address
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: creatorAddress
+      - schema:
+          type: string
+          description: Show relevant rewards for this user's address
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: true
+        in: query
+        name: claimantAddress
+      - schema:
+          description: 'Filter by the type of actions that must be taken to claim the reward, eg: "mint", "swap"'
+          example: swap,mint
+        required: false
+        name: actionType
+        in: query
+      - schema:
+          description: 'Exclude rewards with these action types, eg: "mint", "swap"'
+          example: mint,create-any-token
+        required: false
+        name: excludeActionType
+        in: query
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          description: Include token metadata (price, market cap, etc.) for swap actions. Defaults to false.
+          example: true
+        required: false
+        in: query
+        name: includeTokenMetadata
+      responses:
+        '200':
+          description: Returns a user's RewardKit profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activeBoosts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The reward identifier in the form of "chainId:boostCoreAddress:identifier"
+                          example: 8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1
+                        chainId:
+                          type: number
+                          description: The chain id of the network where the reward is being offered
+                        incentives:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - AllowListIncentive
+                                - CGDAIncentive
+                                - ERC20Incentive
+                                - PointsIncentive
+                                - ERC20VariableIncentive
+                                - ERC20VariableCriteriaIncentive
+                                - ERC20VariableCriteriaIncentiveV2
+                                - ERC20PeggedIncentive
+                                - ERC20PeggedVariableCriteriaIncentive
+                                - ERC20PeggedVariableCriteriaIncentiveV2
+                                description: Human readable label for the incentive type
+                              assetAddress:
+                                type: string
+                                description: Address of the asset being rewarded
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                              rewardPercentage:
+                                type: number
+                                description: For variable criteria incentives, the percent as a whole number (0-100) of the signed claim amount the claimant will receive
+                                example: 50
+                              rebatePercentage:
+                                type: number
+                                description: 'Alias for rewardPercentage (for v2 parity). For variable criteria incentives, the rebate percentage as a whole number. Deprecated: use rewardPercentage instead.'
+                                example: 7
+                                deprecated: true
+                              rewardAmount:
+                                type: string
+                                description: For variable criteria incentives, the maximum amount that can be claimed in a single transaction. Otherwise, the fixed reward value. If reward is queried with a claimant address, and the user has performed the requisite claim action, and reward is in a claimable state, this will be the claimable amount.
+                              rewardAmountFormatted:
+                                type: string
+                                description: Formatted amount of reward tokens
+                              maxReward:
+                                type: string
+                                description: Maximum amount of reward tokens that can be claimed
+                              maxRewardUsdValue:
+                                type: number
+                                description: Approximate USD value of the maximum reward that can be claimed
+                              rewardUsdValue:
+                                type: number
+                                description: Approximate amount of USD that can be claimed
+                              tokenSymbol:
+                                type: string
+                                description: 'The symbol of the token being rewarded, ie: USDC'
+                              tokenImageUri:
+                                type: string
+                                description: A url for the token image
+                              metadata:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                    description: The system ID of the token
+                                  chainId:
+                                    type: number
+                                    description: The chain ID where this token is deployed
+                                  address:
+                                    type: string
+                                    description: The address of the token
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  decimals:
+                                    type: number
+                                    description: The number of decimal places for the token, typically 18
+                                  name:
+                                    type: string
+                                    description: The display name for the token
+                                  symbol:
+                                    type: string
+                                    description: The token's symbol, "DEGEN" for example
+                                  imageUri:
+                                    type: string
+                                    description: A URI pointing to an image representing the token
+                                required:
+                                - id
+                                - chainId
+                                - address
+                                - decimals
+                                - name
+                                - symbol
+                                - imageUri
+                                description: Additional metadata about the asset being rewarded
+                            required:
+                            - type
+                            description: An individual incentive that can be offered as part of a reward
+                          description: The incentives that can be claimed as part of the reward
+                        status:
+                          type: string
+                          enum:
+                          - active
+                          - claimed
+                          - claimable
+                          description: The status of the reward, either active, claimable, or claimed
+                        txHash:
+                          type: string
+                          description: The transaction hash of the reward
+                        boostName:
+                          type:
+                          - string
+                          - 'null'
+                          description: The status of the reward, either active, claimable, or claimed
+                        nftImageUri:
+                          type: string
+                          description: The url of an image to present along with the reward
+                        nftName:
+                          type: string
+                          description: The name of the NFT associated with the reward
+                        tokenImageUri:
+                          type: string
+                          description: The url of an individual token to present along with the reward
+                        blockTimestamp:
+                          type: string
+                          description: The block timestamp of the reward
+                        projectUrl:
+                          type: string
+                          format: uri
+                          description: The URL where users can view or interact with this reward's associated project
+                        actionTemplate:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The action template's system id
+                            projectId:
+                              type: string
+                              description: Human readable project name the action is designed for, eg. "zora"
+                            actionType:
+                              type: string
+                              description: 'Readable system type describing the type of action that must be taken to claim the reward, eg: "mint", "create-any-token"'
+                              example: mint
+                            projectImage:
+                              type: string
+                              description: A url for this action template's project image
+                            description:
+                              type:
+                              - string
+                              - 'null'
+                              description: A description of the action that must be taken to claim the reward
+                            category:
+                              type:
+                              - string
+                              - 'null'
+                              enum:
+                              - defi
+                              - nft
+                              - gaming
+                              - social
+                              - bridge
+                              - governance
+                              - payments
+                              - other
+                              description: 'The category of the boost action, eg: "defi", "nft", "gaming"'
+                              example: defi
+                          required:
+                          - id
+                          - projectId
+                          - actionType
+                          - projectImage
+                          description: An object containing information about the action that must be taken to claim the reward
+                        startTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: Start time of a boost
+                        endTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: End time of a boost
+                        claimCount:
+                          type: integer
+                          minimum: 0
+                          description: The total number of claims for this reward
+                        totalBudget:
+                          type: string
+                          description: The total budget allocated for this reward across all incentives, in the reward token's smallest unit
+                        rewardsDistributed:
+                          type: string
+                          description: The total amount of rewards distributed for this reward, in the reward token's smallest unit
+                        signature:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            claimant:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            incentiveId:
+                              type: integer
+                              minimum: 0
+                            signature:
+                              type: string
+                            referrer:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                          required:
+                          - claimant
+                          - incentiveId
+                          - signature
+                          - referrer
+                          description: The claim signature for the reward
+                        accessStatus:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - allowed
+                          - denied
+                          - not-allowed
+                          description: Determines the access status of the boost for a given address
+                        actionTokenMetadata:
+                          type: object
+                          properties:
+                            tokenSymbol:
+                              type: string
+                              description: The symbol of the token being swapped, e.g., "DEGEN"
+                            tokenContract:
+                              type: string
+                              description: The contract address of the token
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            tokenImage:
+                              type: string
+                              format: uri
+                              description: URL for the token image
+                            chainId:
+                              type: number
+                              description: The chain ID where the token exists
+                            decimals:
+                              type: number
+                              description: The number of decimals for the token
+                            marketCap:
+                              type: number
+                              description: Market capitalization in USD
+                            priceChange24Hr:
+                              type: number
+                              description: Price change percentage in the last 24 hours
+                            volume24Hr:
+                              type: number
+                              description: Trading volume in USD for the last 24 hours
+                            priceUsd:
+                              type: number
+                              description: Current price in USD
+                            holders:
+                              type: number
+                              description: Number of token holders
+                          required:
+                          - tokenSymbol
+                          - tokenContract
+                          - chainId
+                          description: Metadata for tokens, including price and market data
+                        verificationLevel:
+                          type:
+                          - string
+                          - 'null'
+                          description: Verification level required for boosts in the World ecosystem
+                        usdDistributed24Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last 24 hours
+                          example: 12345.67
+                        usdDistributed1Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last hour
+                          example: 1234.56
+                      required:
+                      - id
+                      - chainId
+                      - incentives
+                      - actionTemplate
+                      description: A single RewardKit reward, with incentives, and additional configuration
+                    description: An array of active RewardKit rewards that match a filter criteria, but are not yet claimable or claimed
+                  claimedBoosts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The reward identifier in the form of "chainId:boostCoreAddress:identifier"
+                          example: 8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1
+                        chainId:
+                          type: number
+                          description: The chain id of the network where the reward is being offered
+                        incentives:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - AllowListIncentive
+                                - CGDAIncentive
+                                - ERC20Incentive
+                                - PointsIncentive
+                                - ERC20VariableIncentive
+                                - ERC20VariableCriteriaIncentive
+                                - ERC20VariableCriteriaIncentiveV2
+                                - ERC20PeggedIncentive
+                                - ERC20PeggedVariableCriteriaIncentive
+                                - ERC20PeggedVariableCriteriaIncentiveV2
+                                description: Human readable label for the incentive type
+                              assetAddress:
+                                type: string
+                                description: Address of the asset being rewarded
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                              rewardPercentage:
+                                type: number
+                                description: For variable criteria incentives, the percent as a whole number (0-100) of the signed claim amount the claimant will receive
+                                example: 50
+                              rebatePercentage:
+                                type: number
+                                description: 'Alias for rewardPercentage (for v2 parity). For variable criteria incentives, the rebate percentage as a whole number. Deprecated: use rewardPercentage instead.'
+                                example: 7
+                                deprecated: true
+                              rewardAmount:
+                                type: string
+                                description: For variable criteria incentives, the maximum amount that can be claimed in a single transaction. Otherwise, the fixed reward value. If reward is queried with a claimant address, and the user has performed the requisite claim action, and reward is in a claimable state, this will be the claimable amount.
+                              rewardAmountFormatted:
+                                type: string
+                                description: Formatted amount of reward tokens
+                              maxReward:
+                                type: string
+                                description: Maximum amount of reward tokens that can be claimed
+                              maxRewardUsdValue:
+                                type: number
+                                description: Approximate USD value of the maximum reward that can be claimed
+                              rewardUsdValue:
+                                type: number
+                                description: Approximate amount of USD that can be claimed
+                              tokenSymbol:
+                                type: string
+                                description: 'The symbol of the token being rewarded, ie: USDC'
+                              tokenImageUri:
+                                type: string
+                                description: A url for the token image
+                              metadata:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                    description: The system ID of the token
+                                  chainId:
+                                    type: number
+                                    description: The chain ID where this token is deployed
+                                  address:
+                                    type: string
+                                    description: The address of the token
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  decimals:
+                                    type: number
+                                    description: The number of decimal places for the token, typically 18
+                                  name:
+                                    type: string
+                                    description: The display name for the token
+                                  symbol:
+                                    type: string
+                                    description: The token's symbol, "DEGEN" for example
+                                  imageUri:
+                                    type: string
+                                    description: A URI pointing to an image representing the token
+                                required:
+                                - id
+                                - chainId
+                                - address
+                                - decimals
+                                - name
+                                - symbol
+                                - imageUri
+                                description: Additional metadata about the asset being rewarded
+                            required:
+                            - type
+                            description: An individual incentive that can be offered as part of a reward
+                          description: The incentives that can be claimed as part of the reward
+                        status:
+                          type: string
+                          enum:
+                          - active
+                          - claimed
+                          - claimable
+                          description: The status of the reward, either active, claimable, or claimed
+                        txHash:
+                          type: string
+                          description: The transaction hash of the reward
+                        boostName:
+                          type:
+                          - string
+                          - 'null'
+                          description: The status of the reward, either active, claimable, or claimed
+                        nftImageUri:
+                          type: string
+                          description: The url of an image to present along with the reward
+                        nftName:
+                          type: string
+                          description: The name of the NFT associated with the reward
+                        tokenImageUri:
+                          type: string
+                          description: The url of an individual token to present along with the reward
+                        blockTimestamp:
+                          type: string
+                          description: The block timestamp of the reward
+                        projectUrl:
+                          type: string
+                          format: uri
+                          description: The URL where users can view or interact with this reward's associated project
+                        actionTemplate:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The action template's system id
+                            projectId:
+                              type: string
+                              description: Human readable project name the action is designed for, eg. "zora"
+                            actionType:
+                              type: string
+                              description: 'Readable system type describing the type of action that must be taken to claim the reward, eg: "mint", "create-any-token"'
+                              example: mint
+                            projectImage:
+                              type: string
+                              description: A url for this action template's project image
+                            description:
+                              type:
+                              - string
+                              - 'null'
+                              description: A description of the action that must be taken to claim the reward
+                            category:
+                              type:
+                              - string
+                              - 'null'
+                              enum:
+                              - defi
+                              - nft
+                              - gaming
+                              - social
+                              - bridge
+                              - governance
+                              - payments
+                              - other
+                              description: 'The category of the boost action, eg: "defi", "nft", "gaming"'
+                              example: defi
+                          required:
+                          - id
+                          - projectId
+                          - actionType
+                          - projectImage
+                          description: An object containing information about the action that must be taken to claim the reward
+                        startTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: Start time of a boost
+                        endTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: End time of a boost
+                        claimCount:
+                          type: integer
+                          minimum: 0
+                          description: The total number of claims for this reward
+                        totalBudget:
+                          type: string
+                          description: The total budget allocated for this reward across all incentives, in the reward token's smallest unit
+                        rewardsDistributed:
+                          type: string
+                          description: The total amount of rewards distributed for this reward, in the reward token's smallest unit
+                        signature:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            claimant:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            incentiveId:
+                              type: integer
+                              minimum: 0
+                            signature:
+                              type: string
+                            referrer:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                          required:
+                          - claimant
+                          - incentiveId
+                          - signature
+                          - referrer
+                          description: The claim signature for the reward
+                        accessStatus:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - allowed
+                          - denied
+                          - not-allowed
+                          description: Determines the access status of the boost for a given address
+                        actionTokenMetadata:
+                          type: object
+                          properties:
+                            tokenSymbol:
+                              type: string
+                              description: The symbol of the token being swapped, e.g., "DEGEN"
+                            tokenContract:
+                              type: string
+                              description: The contract address of the token
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            tokenImage:
+                              type: string
+                              format: uri
+                              description: URL for the token image
+                            chainId:
+                              type: number
+                              description: The chain ID where the token exists
+                            decimals:
+                              type: number
+                              description: The number of decimals for the token
+                            marketCap:
+                              type: number
+                              description: Market capitalization in USD
+                            priceChange24Hr:
+                              type: number
+                              description: Price change percentage in the last 24 hours
+                            volume24Hr:
+                              type: number
+                              description: Trading volume in USD for the last 24 hours
+                            priceUsd:
+                              type: number
+                              description: Current price in USD
+                            holders:
+                              type: number
+                              description: Number of token holders
+                          required:
+                          - tokenSymbol
+                          - tokenContract
+                          - chainId
+                          description: Metadata for tokens, including price and market data
+                        verificationLevel:
+                          type:
+                          - string
+                          - 'null'
+                          description: Verification level required for boosts in the World ecosystem
+                        usdDistributed24Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last 24 hours
+                          example: 12345.67
+                        usdDistributed1Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last hour
+                          example: 1234.56
+                      required:
+                      - id
+                      - chainId
+                      - incentives
+                      - actionTemplate
+                      description: A single RewardKit reward, with incentives, and additional configuration
+                    description: An array of claimed RewardKit rewards that match a filter criteria
+                  claimableBoosts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The reward identifier in the form of "chainId:boostCoreAddress:identifier"
+                          example: 8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1
+                        chainId:
+                          type: number
+                          description: The chain id of the network where the reward is being offered
+                        incentives:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - AllowListIncentive
+                                - CGDAIncentive
+                                - ERC20Incentive
+                                - PointsIncentive
+                                - ERC20VariableIncentive
+                                - ERC20VariableCriteriaIncentive
+                                - ERC20VariableCriteriaIncentiveV2
+                                - ERC20PeggedIncentive
+                                - ERC20PeggedVariableCriteriaIncentive
+                                - ERC20PeggedVariableCriteriaIncentiveV2
+                                description: Human readable label for the incentive type
+                              assetAddress:
+                                type: string
+                                description: Address of the asset being rewarded
+                                example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                              rewardPercentage:
+                                type: number
+                                description: For variable criteria incentives, the percent as a whole number (0-100) of the signed claim amount the claimant will receive
+                                example: 50
+                              rebatePercentage:
+                                type: number
+                                description: 'Alias for rewardPercentage (for v2 parity). For variable criteria incentives, the rebate percentage as a whole number. Deprecated: use rewardPercentage instead.'
+                                example: 7
+                                deprecated: true
+                              rewardAmount:
+                                type: string
+                                description: For variable criteria incentives, the maximum amount that can be claimed in a single transaction. Otherwise, the fixed reward value. If reward is queried with a claimant address, and the user has performed the requisite claim action, and reward is in a claimable state, this will be the claimable amount.
+                              rewardAmountFormatted:
+                                type: string
+                                description: Formatted amount of reward tokens
+                              maxReward:
+                                type: string
+                                description: Maximum amount of reward tokens that can be claimed
+                              maxRewardUsdValue:
+                                type: number
+                                description: Approximate USD value of the maximum reward that can be claimed
+                              rewardUsdValue:
+                                type: number
+                                description: Approximate amount of USD that can be claimed
+                              tokenSymbol:
+                                type: string
+                                description: 'The symbol of the token being rewarded, ie: USDC'
+                              tokenImageUri:
+                                type: string
+                                description: A url for the token image
+                              metadata:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                    description: The system ID of the token
+                                  chainId:
+                                    type: number
+                                    description: The chain ID where this token is deployed
+                                  address:
+                                    type: string
+                                    description: The address of the token
+                                    example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                    pattern: ^0x[a-fA-F0-9]{40}$
+                                  decimals:
+                                    type: number
+                                    description: The number of decimal places for the token, typically 18
+                                  name:
+                                    type: string
+                                    description: The display name for the token
+                                  symbol:
+                                    type: string
+                                    description: The token's symbol, "DEGEN" for example
+                                  imageUri:
+                                    type: string
+                                    description: A URI pointing to an image representing the token
+                                required:
+                                - id
+                                - chainId
+                                - address
+                                - decimals
+                                - name
+                                - symbol
+                                - imageUri
+                                description: Additional metadata about the asset being rewarded
+                            required:
+                            - type
+                            description: An individual incentive that can be offered as part of a reward
+                          description: The incentives that can be claimed as part of the reward
+                        status:
+                          type: string
+                          enum:
+                          - active
+                          - claimed
+                          - claimable
+                          description: The status of the reward, either active, claimable, or claimed
+                        txHash:
+                          type: string
+                          description: The transaction hash of the reward
+                        boostName:
+                          type:
+                          - string
+                          - 'null'
+                          description: The status of the reward, either active, claimable, or claimed
+                        nftImageUri:
+                          type: string
+                          description: The url of an image to present along with the reward
+                        nftName:
+                          type: string
+                          description: The name of the NFT associated with the reward
+                        tokenImageUri:
+                          type: string
+                          description: The url of an individual token to present along with the reward
+                        blockTimestamp:
+                          type: string
+                          description: The block timestamp of the reward
+                        projectUrl:
+                          type: string
+                          format: uri
+                          description: The URL where users can view or interact with this reward's associated project
+                        actionTemplate:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The action template's system id
+                            projectId:
+                              type: string
+                              description: Human readable project name the action is designed for, eg. "zora"
+                            actionType:
+                              type: string
+                              description: 'Readable system type describing the type of action that must be taken to claim the reward, eg: "mint", "create-any-token"'
+                              example: mint
+                            projectImage:
+                              type: string
+                              description: A url for this action template's project image
+                            description:
+                              type:
+                              - string
+                              - 'null'
+                              description: A description of the action that must be taken to claim the reward
+                            category:
+                              type:
+                              - string
+                              - 'null'
+                              enum:
+                              - defi
+                              - nft
+                              - gaming
+                              - social
+                              - bridge
+                              - governance
+                              - payments
+                              - other
+                              description: 'The category of the boost action, eg: "defi", "nft", "gaming"'
+                              example: defi
+                          required:
+                          - id
+                          - projectId
+                          - actionType
+                          - projectImage
+                          description: An object containing information about the action that must be taken to claim the reward
+                        startTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: Start time of a boost
+                        endTime:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: End time of a boost
+                        claimCount:
+                          type: integer
+                          minimum: 0
+                          description: The total number of claims for this reward
+                        totalBudget:
+                          type: string
+                          description: The total budget allocated for this reward across all incentives, in the reward token's smallest unit
+                        rewardsDistributed:
+                          type: string
+                          description: The total amount of rewards distributed for this reward, in the reward token's smallest unit
+                        signature:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            claimant:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            incentiveId:
+                              type: integer
+                              minimum: 0
+                            signature:
+                              type: string
+                            referrer:
+                              type: string
+                              description: Ethereum address
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                          required:
+                          - claimant
+                          - incentiveId
+                          - signature
+                          - referrer
+                          description: The claim signature for the reward
+                        accessStatus:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - allowed
+                          - denied
+                          - not-allowed
+                          description: Determines the access status of the boost for a given address
+                        actionTokenMetadata:
+                          type: object
+                          properties:
+                            tokenSymbol:
+                              type: string
+                              description: The symbol of the token being swapped, e.g., "DEGEN"
+                            tokenContract:
+                              type: string
+                              description: The contract address of the token
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            tokenImage:
+                              type: string
+                              format: uri
+                              description: URL for the token image
+                            chainId:
+                              type: number
+                              description: The chain ID where the token exists
+                            decimals:
+                              type: number
+                              description: The number of decimals for the token
+                            marketCap:
+                              type: number
+                              description: Market capitalization in USD
+                            priceChange24Hr:
+                              type: number
+                              description: Price change percentage in the last 24 hours
+                            volume24Hr:
+                              type: number
+                              description: Trading volume in USD for the last 24 hours
+                            priceUsd:
+                              type: number
+                              description: Current price in USD
+                            holders:
+                              type: number
+                              description: Number of token holders
+                          required:
+                          - tokenSymbol
+                          - tokenContract
+                          - chainId
+                          description: Metadata for tokens, including price and market data
+                        verificationLevel:
+                          type:
+                          - string
+                          - 'null'
+                          description: Verification level required for boosts in the World ecosystem
+                        usdDistributed24Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last 24 hours
+                          example: 12345.67
+                        usdDistributed1Hr:
+                          type: number
+                          minimum: 0
+                          description: Volume in USD for the last hour
+                          example: 1234.56
+                      required:
+                      - id
+                      - chainId
+                      - incentives
+                      - actionTemplate
+                      description: A single RewardKit reward, with incentives, and additional configuration
+                    description: An array of claimable RewardKit rewards that match a filter criteria
+                  totalClaimedAmountUsd:
+                    type: number
+                    minimum: 0
+                    description: The total amount of USD claimed by the user via rewards that match a filter criteria
+                  totalClaimableAmountUsd:
+                    type: number
+                    minimum: 0
+                    description: The total amount of USD claimable by the user via rewards that match a filter criteria
+                required:
+                - activeBoosts
+                - claimedBoosts
+                - claimableBoosts
+                - totalClaimedAmountUsd
+                - totalClaimableAmountUsd
+                description: Rewards and metadata that correspond to the RewardKit for a user's address
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    anyOf:
+                    - type: string
+                    - type: object
+                      properties:
+                        message:
+                          type: string
+                          description: Human readable message for error that occured
+                        code:
+                          type: number
+                          description: Error code for error that occured, will typically be the HTTP status code
+                      required:
+                      - message
+                    description: A generic error object that can be used to represent any error that occurs in the system.
+                required:
+                - error
+  /reward-kit/boosts/:id:
+    get:
+      operationId: getRewardKitReward
+      summary: Get a single RewardKit reward
+      description: Retrieve details on a reward, optionally providing a claimant address to decorate with additional claim context.
+      tags:
+      - RewardKit
+      parameters:
+      - schema:
+          type: string
+          description: The ID of the reward to fetch details for.
+          example: 8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1
+        required: true
+        description: BoostID in format chainId:boostCoreAddress:identifier
+        in: path
+        name: id
+      - schema:
+          type: string
+          description: If included, the address of a specific claimant to enrich data with claim information, like claimed, claimable, and tx hash for eligible claim.
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        name: address
+        in: query
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          description: Include token metadata (price, market cap, etc.) for applicable actions. Defaults to false.
+          example: true
+        required: false
+        name: includeTokenMetadata
+        in: query
+      responses:
+        '200':
+          description: Returns single RewardKit reward
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  boost:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The reward identifier in the form of "chainId:boostCoreAddress:identifier"
+                        example: 8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1
+                      chainId:
+                        type: number
+                        description: The chain id of the network where the reward is being offered
+                      incentives:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                              - AllowListIncentive
+                              - CGDAIncentive
+                              - ERC20Incentive
+                              - PointsIncentive
+                              - ERC20VariableIncentive
+                              - ERC20VariableCriteriaIncentive
+                              - ERC20VariableCriteriaIncentiveV2
+                              - ERC20PeggedIncentive
+                              - ERC20PeggedVariableCriteriaIncentive
+                              - ERC20PeggedVariableCriteriaIncentiveV2
+                              description: Human readable label for the incentive type
+                            assetAddress:
+                              type: string
+                              description: Address of the asset being rewarded
+                              example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                              pattern: ^0x[a-fA-F0-9]{40}$
+                            rewardPercentage:
+                              type: number
+                              description: For variable criteria incentives, the percent as a whole number (0-100) of the signed claim amount the claimant will receive
+                              example: 50
+                            rebatePercentage:
+                              type: number
+                              description: 'Alias for rewardPercentage (for v2 parity). For variable criteria incentives, the rebate percentage as a whole number. Deprecated: use rewardPercentage instead.'
+                              example: 7
+                              deprecated: true
+                            rewardAmount:
+                              type: string
+                              description: For variable criteria incentives, the maximum amount that can be claimed in a single transaction. Otherwise, the fixed reward value. If reward is queried with a claimant address, and the user has performed the requisite claim action, and reward is in a claimable state, this will be the claimable amount.
+                            rewardAmountFormatted:
+                              type: string
+                              description: Formatted amount of reward tokens
+                            maxReward:
+                              type: string
+                              description: Maximum amount of reward tokens that can be claimed
+                            maxRewardUsdValue:
+                              type: number
+                              description: Approximate USD value of the maximum reward that can be claimed
+                            rewardUsdValue:
+                              type: number
+                              description: Approximate amount of USD that can be claimed
+                            tokenSymbol:
+                              type: string
+                              description: 'The symbol of the token being rewarded, ie: USDC'
+                            tokenImageUri:
+                              type: string
+                              description: A url for the token image
+                            metadata:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                id:
+                                  type: string
+                                  description: The system ID of the token
+                                chainId:
+                                  type: number
+                                  description: The chain ID where this token is deployed
+                                address:
+                                  type: string
+                                  description: The address of the token
+                                  example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                decimals:
+                                  type: number
+                                  description: The number of decimal places for the token, typically 18
+                                name:
+                                  type: string
+                                  description: The display name for the token
+                                symbol:
+                                  type: string
+                                  description: The token's symbol, "DEGEN" for example
+                                imageUri:
+                                  type: string
+                                  description: A URI pointing to an image representing the token
+                              required:
+                              - id
+                              - chainId
+                              - address
+                              - decimals
+                              - name
+                              - symbol
+                              - imageUri
+                              description: Additional metadata about the asset being rewarded
+                          required:
+                          - type
+                          description: An individual incentive that can be offered as part of a reward
+                        description: The incentives that can be claimed as part of the reward
+                      status:
+                        type: string
+                        enum:
+                        - active
+                        - claimed
+                        - claimable
+                        description: The status of the reward, either active, claimable, or claimed
+                      txHash:
+                        type: string
+                        description: The transaction hash of the reward
+                      boostName:
+                        type:
+                        - string
+                        - 'null'
+                        description: The status of the reward, either active, claimable, or claimed
+                      nftImageUri:
+                        type: string
+                        description: The url of an image to present along with the reward
+                      nftName:
+                        type: string
+                        description: The name of the NFT associated with the reward
+                      tokenImageUri:
+                        type: string
+                        description: The url of an individual token to present along with the reward
+                      blockTimestamp:
+                        type: string
+                        description: The block timestamp of the reward
+                      projectUrl:
+                        type: string
+                        format: uri
+                        description: The URL where users can view or interact with this reward's associated project
+                      actionTemplate:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: The action template's system id
+                          projectId:
+                            type: string
+                            description: Human readable project name the action is designed for, eg. "zora"
+                          actionType:
+                            type: string
+                            description: 'Readable system type describing the type of action that must be taken to claim the reward, eg: "mint", "create-any-token"'
+                            example: mint
+                          projectImage:
+                            type: string
+                            description: A url for this action template's project image
+                          description:
+                            type:
+                            - string
+                            - 'null'
+                            description: A description of the action that must be taken to claim the reward
+                          category:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - defi
+                            - nft
+                            - gaming
+                            - social
+                            - bridge
+                            - governance
+                            - payments
+                            - other
+                            description: 'The category of the boost action, eg: "defi", "nft", "gaming"'
+                            example: defi
+                        required:
+                        - id
+                        - projectId
+                        - actionType
+                        - projectImage
+                        description: An object containing information about the action that must be taken to claim the reward
+                      startTime:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: Start time of a boost
+                      endTime:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: End time of a boost
+                      claimCount:
+                        type: integer
+                        minimum: 0
+                        description: The total number of claims for this reward
+                      totalBudget:
+                        type: string
+                        description: The total budget allocated for this reward across all incentives, in the reward token's smallest unit
+                      rewardsDistributed:
+                        type: string
+                        description: The total amount of rewards distributed for this reward, in the reward token's smallest unit
+                      signature:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          claimant:
+                            type: string
+                            description: Ethereum address
+                            example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                            pattern: ^0x[a-fA-F0-9]{40}$
+                          incentiveId:
+                            type: integer
+                            minimum: 0
+                          signature:
+                            type: string
+                          referrer:
+                            type: string
+                            description: Ethereum address
+                            example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                            pattern: ^0x[a-fA-F0-9]{40}$
+                        required:
+                        - claimant
+                        - incentiveId
+                        - signature
+                        - referrer
+                        description: The claim signature for the reward
+                      accessStatus:
+                        type:
+                        - string
+                        - 'null'
+                        enum:
+                        - allowed
+                        - denied
+                        - not-allowed
+                        description: Determines the access status of the boost for a given address
+                      actionTokenMetadata:
+                        type: object
+                        properties:
+                          tokenSymbol:
+                            type: string
+                            description: The symbol of the token being swapped, e.g., "DEGEN"
+                          tokenContract:
+                            type: string
+                            description: The contract address of the token
+                            example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                            pattern: ^0x[a-fA-F0-9]{40}$
+                          tokenImage:
+                            type: string
+                            format: uri
+                            description: URL for the token image
+                          chainId:
+                            type: number
+                            description: The chain ID where the token exists
+                          decimals:
+                            type: number
+                            description: The number of decimals for the token
+                          marketCap:
+                            type: number
+                            description: Market capitalization in USD
+                          priceChange24Hr:
+                            type: number
+                            description: Price change percentage in the last 24 hours
+                          volume24Hr:
+                            type: number
+                            description: Trading volume in USD for the last 24 hours
+                          priceUsd:
+                            type: number
+                            description: Current price in USD
+                          holders:
+                            type: number
+                            description: Number of token holders
+                        required:
+                        - tokenSymbol
+                        - tokenContract
+                        - chainId
+                        description: Metadata for tokens, including price and market data
+                      verificationLevel:
+                        type:
+                        - string
+                        - 'null'
+                        description: Verification level required for boosts in the World ecosystem
+                      usdDistributed24Hr:
+                        type: number
+                        minimum: 0
+                        description: Volume in USD for the last 24 hours
+                        example: 12345.67
+                      usdDistributed1Hr:
+                        type: number
+                        minimum: 0
+                        description: Volume in USD for the last hour
+                        example: 1234.56
+                    required:
+                    - id
+                    - chainId
+                    - incentives
+                    - actionTemplate
+                    description: An object containing details about the reward.
+                  totalClaims:
+                    type: integer
+                    minimum: 0
+                    description: The total number of claims for this reward.
+                  claims:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          description: The address of the user who claimed the reward.
+                          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                        txHash:
+                          type: string
+                          description: The transaction hash of the claim transaction.
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: The timestamp of the claim transaction.
+                      required:
+                      - address
+                      - txHash
+                      - timestamp
+                      description: An object containing details about a single reward claim.
+                    description: An array of user claims for this reward.
+                  status:
+                    type: string
+                    enum:
+                    - active
+                    - claimed
+                    - claimable
+                    description: The state of the reward, either active, claimed, or claimable. Where active is when the reward is still eligible to be completed, claimed is when user has claimed the reward, and claimable is when the user has completed the required action and is eligible to claim.
+                  txHash:
+                    type: string
+                    description: If address was provided, and the user has completed the reward action, the transaction hash of the claim transaction.
+                  accessStatus:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - allowed
+                    - denied
+                    - not-allowed
+                    description: Determines the access status of the boost for a given address
+                  verificationLevel:
+                    type:
+                    - string
+                    - 'null'
+                    description: Verification level required for boosts in the World ecosystem
+                required:
+                - boost
+                - totalClaims
+                - claims
+                - status
+                description: The response object for a single RewardKit reward.
+        '404':
+          description: Reward not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    anyOf:
+                    - type: string
+                    - type: object
+                      properties:
+                        message:
+                          type: string
+                          description: Human readable message for error that occured
+                        code:
+                          type: number
+                          description: Error code for error that occured, will typically be the HTTP status code
+                      required:
+                      - message
+                    description: A generic error object that can be used to represent any error that occurs in the system.
+                required:
+                - error

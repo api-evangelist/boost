@@ -1,0 +1,212 @@
+openapi: 3.1.0
+info:
+  title: Boost V2 Action Contract API
+  description: Get Boosts and sign claims for the Boost Validator
+  termsOfService: https://rabbithole-assets.s3.amazonaws.com/BoostStudios_Terms_Of_Service.pdf
+  contact:
+    url: https://airtable.com/appPys6nAx8smVpTA/shrqpPGsDx2W6oY24
+    email: support@boost.xyz
+  version: 2.0.0
+servers:
+- url: https://api-v2.boost.xyz
+  description: Boost V2
+tags:
+- name: Contract
+paths:
+  /known-signatures:
+    get:
+      operationId: getKnownSignatures
+      summary: Find event and function signatures used in Boost configurations
+      description: Retrieve event or function signatures, human readable signature and their ABI which can be used when configuring Boost Actions.
+      tags:
+      - Contract
+      parameters:
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          default: 1
+          description: The desired page to return from the query
+        required: false
+        in: query
+        name: page
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          maximum: 100
+          default: 10
+          description: The amount of items to return from the query, defaults to 10, and must be <= 100
+        required: false
+        in: query
+        name: pageSize
+      responses:
+        '200':
+          description: Returns a list of Boosts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signatures:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A hexadecimal string representing the function or event signature. This string will always start with 0x, and end with the 32 byte signature. If selector is a function, then the 4 byte signature will be left padded with zeroes to 32 bytes.
+                          example: '0x00000000000000000000000000000000000000000000000000000000a836f32f'
+                        textSignature:
+                          type: string
+                          description: The human readable function or event signature from the smart contract
+                          example: mint(address mintTo,uint256 quantity,address collection,uint256 tokenId,address mintReferral,string comment)
+                        abiItem:
+                          type: object
+                          description: The JSON of the underlying contract's function or event ABI item
+                          example:
+                            name: mint
+                            type: function
+                            inputs:
+                            - name: mintTo
+                              type: address
+                            - name: quantity
+                              type: uint256
+                            - name: collection
+                              type: address
+                            - name: tokenId
+                              type: uint256
+                            - name: mintReferral
+                              type: address
+                            - name: comment
+                              type: string
+                            outputs: []
+                            stateMutability: nonpayable
+                        signatureType:
+                          type: string
+                          description: Defines if this signature is an event or function
+                          example: function
+                      required:
+                      - id
+                      - textSignature
+                      - signatureType
+                      description: An object containing signatures, ABI item JSON, human readable signature, and whether the information is for an event or function
+                  count:
+                    type: number
+                    description: The total number of signatures returned in this api call.
+                required:
+                - signatures
+                - count
+  /explore/contracts:
+    get:
+      operationId: exploreContracts
+      summary: Explore contracts with Boosts
+      description: Find information on contracts used to interact with Boosts, as well as total claims, total USD claimed, address, and chain ID
+      tags:
+      - Contract
+      parameters:
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          default: 1
+          description: The desired page to return from the query
+        required: false
+        in: query
+        name: page
+      - schema:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          maximum: 100
+          default: 10
+          description: The amount of items to return from the query, defaults to 10, and must be <= 100
+        required: false
+        in: query
+        name: pageSize
+      - schema:
+          type: string
+          enum:
+          - most-completions
+          - total-spend
+          - recently-deployed
+          description: Sort by most total completions, total budget, or recent Boost creations
+          example: most-completions
+        required: true
+        in: query
+        name: sortBy
+      - schema:
+          type: string
+          enum:
+          - 6h
+          - 24h
+          - 7d
+          default: 7d
+          description: The time range to filter by
+          example: 7d
+        required: false
+        in: query
+        name: timePeriod
+      - schema:
+          description: A comma separated list of chain IDs for Boost actions to filter by
+          example: 8453,10
+        required: false
+        in: query
+        name: actionChainIds
+      - schema:
+          type: string
+          description: Filter by Boosts created by a specific user address
+          example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+          pattern: ^0x[a-fA-F0-9]{40}$
+        required: false
+        in: query
+        name: userAddress
+      responses:
+        '200':
+          description: Returns a list of smart contracts known to the Boost system
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    chainId:
+                      type: number
+                      description: The chain ID of the smart contract
+                      example: 8453
+                    address:
+                      type: string
+                      description: The address of the smart contract
+                      example: '0x378632819f39c74c4f56b1429e760739c5fb51b7'
+                      pattern: ^0x[a-fA-F0-9]{40}$
+                    name:
+                      type: string
+                      description: A human readable name for the smart contract
+                      example: Zora
+                    stats:
+                      type: object
+                      properties:
+                        boostCount:
+                          type: number
+                          description: The number of Boosts configured with this smart contract
+                        totalClaims:
+                          type: number
+                          description: The total number of claims made with this smart contract
+                        totalAmountClaimedUsd:
+                          type: number
+                          description: The total amount of USD distributed by Boosts configured with this smart contract
+                      required:
+                      - boostCount
+                      - totalClaims
+                      - totalAmountClaimedUsd
+                  required:
+                  - chainId
+                  - address
+                  - name
+                  - stats
+                  description: An object containing details about a smart contract used in Boosts known to the system
