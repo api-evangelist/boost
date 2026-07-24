@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/boost-v2-openapi.json
+format: json
+envelope:
+  media_type: application/json
+  shape: '{ "error": string | { "message": string, "details": ... } }'
+  notes: >
+    Boost V2 does not use RFC 9457 problem+json. Errors are returned as a JSON
+    object with an `error` field that is either a human-readable string or an
+    object carrying a `message` (and optional details).
+problems:
+  - status: 400
+    title: Validation failed
+    meaning: Request parameters failed validation (bad filter, malformed address, out-of-range page/pageSize).
+    observed_on: [getBoosts, exploreBoosts, exploreContracts, getSignatures, getRewardKitRewards]
+  - status: 404
+    title: Not found
+    meaning: The requested Boost, budget account, action template, or reward could not be found.
+    observed_on: [getBoost, getBudgetAccount, getActionTemplate, getRewardKitReward]
+  - status: 410
+    title: Gone
+    meaning: The requested resource is no longer available (e.g. an expired or removed boost/signature context).
+    observed_on: [getSignatures]
+  - status: 500
+    title: Internal server error
+    meaning: Unexpected server-side error.
+    observed_on: [getBoosts, getBoost, getRewardKit]

@@ -1,0 +1,60 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/boost-v2-openapi.json
+description: >
+  Entity-relationship graph derived from the Boost V2 API resources and their
+  id-reference fields. Boost is the central campaign object; actions and incentives
+  configure how rewards are earned and paid, funded by a budget account.
+entities:
+  - name: Boost
+    endpoints: [getBoosts, getBoost, getBoostActivity, exploreBoosts]
+    key: id
+    description: An onchain incentive campaign; the central object.
+    relationships:
+      - {type: belongs_to, target: BudgetAccount, via: budgetAccount}
+      - {type: has_many, target: Action, via: actions}
+      - {type: has_many, target: Incentive, via: incentives}
+      - {type: has_many, target: ClaimEvent, via: activity}
+      - {type: has_one, target: Token, via: token}
+  - name: BudgetAccount
+    endpoints: [getBudgetAccounts, getBudgetAccount]
+    key: id
+    description: A funding account (contract address + chain) that pays out boost incentives; can have permissioned members.
+    relationships:
+      - {type: has_many, target: Boost, via: owner}
+      - {type: has_many, target: Member, via: members}
+  - name: ActionTemplate
+    endpoints: [getActionTemplates, getActionTemplate]
+    key: actionTemplateId
+    description: Reusable template describing an onchain action (contract deployment, event/function signatures, claimant config) used to initialize Boost Actions.
+    relationships:
+      - {type: has_many, target: Action, via: actionTemplateId}
+  - name: Action
+    description: A configured onchain action within a Boost that a user performs to become eligible.
+    relationships:
+      - {type: belongs_to, target: Boost}
+      - {type: belongs_to, target: ActionTemplate, via: actionTemplateId}
+      - {type: has_many, target: Signature, via: signatures}
+  - name: Incentive
+    description: A reward configuration attached to a Boost (token, amount, distribution rules).
+    relationships:
+      - {type: belongs_to, target: Boost}
+      - {type: has_one, target: Token, via: token}
+  - name: Signature
+    endpoints: [getSignatures, getClaimableSignatures]
+    description: A server-generated claim signature authorizing an onchain reward claim for an address.
+    relationships:
+      - {type: belongs_to, target: Boost, via: boostId}
+      - {type: belongs_to, target: Claimant, via: address}
+  - name: RewardKitReward
+    endpoints: [getRewardKitRewards, getRewardKitReward, getRewardKitTrending, getRewardKit]
+    description: A reward surfaced through RewardKit; wraps a Boost incentive for consumer-facing claim UX.
+    relationships:
+      - {type: belongs_to, target: Boost}
+  - name: Contract
+    endpoints: [exploreContracts, getKnownSignatures]
+    description: An onchain contract interacted with by Boosts; carries claim totals and chain id.
+    relationships:
+      - {type: has_many, target: Boost, via: targetContract}
+  - name: Token
+    description: An ERC-20/onchain token used for a reward or budget balance.

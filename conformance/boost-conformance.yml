@@ -1,0 +1,26 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/boost-v2-openapi.json
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: Provider publishes an OpenAPI 3.1.0 document at https://api-v2.boost.xyz/openapi.json
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme; the read API is public/unauthenticated.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors use a plain JSON { error } envelope, not application/problem+json.'
+  - id: pagination
+    conforms: true
+    evidence: Offset pagination via page/pageSize (max 100) across list endpoints.
+  - id: idempotency
+    conforms: false
+    evidence: All operations are read-only GET; no idempotency-key contract.
+  - id: json-api
+    conforms: false
+  - id: rest
+    conforms: true
+    evidence: Resource-oriented JSON over HTTPS with GET semantics.

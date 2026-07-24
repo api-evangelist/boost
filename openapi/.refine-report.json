@@ -1,0 +1,28 @@
+{
+  "provider": "boost",
+  "sources": [
+    "boost-action-api-openapi.yml",
+    "boost-action-template-api-openapi.yml",
+    "boost-blocklist-api-openapi.yml",
+    "boost-boost-api-openapi.yml",
+    "boost-budget-api-openapi.yml",
+    "boost-contract-api-openapi.yml",
+    "boost-rewardkit-api-openapi.yml",
+    "boost-rewardkittrending-api-openapi.yml"
+  ],
+  "outputs": [
+    "boost-action-api-openapi.yml",
+    "boost-action-template-api-openapi.yml",
+    "boost-blocklist-api-openapi.yml",
+    "boost-boost-api-openapi.yml",
+    "boost-budget-api-openapi.yml",
+    "boost-contract-api-openapi.yml",
+    "boost-rewardkit-api-openapi.yml",
+    "boost-rewardkittrending-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

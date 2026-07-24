@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.boost.xyz/v2/reward-kit/overview
+families:
+  - family: RewardKit
+    description: Drop-in React widget for surfacing and claiming Boost reward offers in a host app.
+    packages:
+      - name: "@boostxyz/reward-kit-react"
+        registry: npm
+        url: https://www.npmjs.com/package/@boostxyz/reward-kit-react
+        loader: npm install @boostxyz/reward-kit-react
+        docs: https://docs.boost.xyz/v2/reward-kit/overview
+  - family: Boost UI / Widgets
+    description: Accessible, i18n-ready UI widget library and component set for embedding Boost surfaces.
+    packages:
+      - name: "@boostxyz/widgets"
+        registry: npm
+        url: https://www.npmjs.com/package/@boostxyz/widgets
+        loader: npm install @boostxyz/widgets
+      - name: "@boostxyz/boost-ui"
+        registry: npm
+        url: https://www.npmjs.com/package/@boostxyz/boost-ui
+        loader: npm install @boostxyz/boost-ui
+  - family: Lift MiniApp
+    description: >
+      Hosted World mini-app surface offering instant reward claims, gated by FID,
+      Neynar score, or channel membership.
+    packages: []
+    hosted: true

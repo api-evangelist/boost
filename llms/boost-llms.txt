@@ -1,0 +1,114 @@
+# Boost Docs
+
+> Documentation for Boost Time-Based Incentives, One-Time Actions, and API integrations.
+
+## Docs
+
+- [Get all Action Templates](https://docs.boost.xyz/api-reference/action/get-all-action-templates.md): Returns all known Action Templates that can aid in initializing new Boost Actions and Incentives, with information about project smart contract deployments, event and function signatures, claimant configuration information, and placeholder reward configuration.
+- [Get an Action Template by actionTemplateId](https://docs.boost.xyz/api-reference/action/get-an-action-template-by-actiontemplateid.md): Returns an Action Template by actionTemplateId
+- [Explore contracts with Boosts](https://docs.boost.xyz/api-reference/boost/explore-contracts-with-boosts.md): Discover Boosts with the most claim activity, along with their action and incentive configurations, and total USD distributed.
+- [Find event and function signatures used in Boost configurations](https://docs.boost.xyz/api-reference/boost/find-event-and-function-signatures-used-in-boost-configurations.md): Retrieve event or function signatures, human readable signature and their ABI which can be used when configuring Boost Actions.
+- [Generate a claim signature that can be used to submit a claim](https://docs.boost.xyz/api-reference/boost/generate-a-claim-signature-that-can-be-used-to-submit-a-claim.md): Given a tx hash, id, and valid claim data hash, generate a valid signature that can be used to claim a reward on chain.
+- [Get a list of Boosts](https://docs.boost.xyz/api-reference/boost/get-a-list-of-boosts.md): Accepts pagination, and filter options to return a list of boosts
+- [Get Budgets](https://docs.boost.xyz/api-reference/boost/get-budgets.md): Accepts pagination, and filter options like owner address, chain ID, and permissioned member address.
+- [Get claimable signatures for an address](https://docs.boost.xyz/api-reference/boost/get-claimable-signatures-for-an-address.md): Returns all signatures for an address that have not yet been used to claim their associated boost.
+- [Get details for a Boost](https://docs.boost.xyz/api-reference/boost/get-details-for-a-boost.md): Return detailed information about a Boost, including budget, allowlist, incentives, actions, and token metadata
+- [Get events for a specific Boost](https://docs.boost.xyz/api-reference/boost/get-events-for-a-specific-boost.md): Retrieve a history of claimed incentives
+- [Retrieve a single Budget by its system ID](https://docs.boost.xyz/api-reference/boost/retrieve-a-single-budget-by-its-system-id.md): Retrieve detailed information about a Budget Account, including contract address, chain ID, owner address, label, and members if applicable.
+- [Explore contracts with Boosts](https://docs.boost.xyz/api-reference/contract/explore-contracts-with-boosts.md): Find information on contracts used to interact with Boosts, as well as total claims, total USD claimed, address, and chain ID
+- [Get blocklist:chainid:tokenaddress](https://docs.boost.xyz/api-reference/get-blocklist:chainid:tokenaddress.md)
+- [Get a list of reward kit rewards](https://docs.boost.xyz/api-reference/rewardkit/get-a-list-of-reward-kit-rewards.md): Accepts pagination, and filter options to return a list of rewards
+- [Get a single RewardKit reward](https://docs.boost.xyz/api-reference/rewardkit/get-a-single-rewardkit-reward.md): Retrieve details on a reward, optionally providing a claimant address to decorate with additional claim context.
+- [Get a user's RewardKit profile](https://docs.boost.xyz/api-reference/rewardkit/get-a-users-rewardkit-profile.md): Returns a list of active, claimable, and unclaimed rewards for a given user.
+- [Try to get claim signature without known transaction](https://docs.boost.xyz/api-reference/rewardkit/try-to-get-claim-signature-without-known-transaction.md): Query Dune for user transaction that can generate a valid claim signature
+- [Get trending rewards](https://docs.boost.xyz/api-reference/rewardkittrending/get-trending-rewards.md): Returns a list of boosts that are trending based on the volume in the specified time period (1h or 24h).
+- [Introduction](https://docs.boost.xyz/platform/overview.md): Boost product documentation for onchain incentive campaigns
+- [Time-Based Incentives API](https://docs.boost.xyz/reference/tbi-api.md): Placeholder for the Time-Based Incentives API reference
+- [Campaign Lifecycle](https://docs.boost.xyz/tbi/core-concepts/campaign-lifecycle.md): The phases a Time-Based Incentives campaign moves through, from setup to claim window close
+- [Campaign Modes](https://docs.boost.xyz/tbi/core-concepts/campaign-modes.md): Stackable rules that shape who earns and how much during a Time-Based Incentives campaign
+- [Earning Activation](https://docs.boost.xyz/tbi/core-concepts/earning-activation.md): Limit campaign rewards to users who entered the position through Boost
+- [Reward Calculation](https://docs.boost.xyz/tbi/core-concepts/reward-calculation.md): How eligible balance and time held translate into rewards
+- [Glossary](https://docs.boost.xyz/tbi/glossary.md): Quick reference for terms used across the Time-Based Incentives docs
+- [How It Works](https://docs.boost.xyz/tbi/how-it-works.md): How a Time-Based Incentives campaign actually runs — from goal to earning to claim
+- [Time-Based Incentives](https://docs.boost.xyz/tbi/introduction.md): Reward users for keeping eligible onchain positions active over time
+- [Launch a Campaign](https://docs.boost.xyz/tbi/launch-a-campaign.md): How to bring a TBI campaign to life with the Boost team
+- [User Experience](https://docs.boost.xyz/tbi/user-experience.md): What participating in a Time-Based Incentives campaign looks like for a user — discovery, depositing, earning, and claiming
+- [Generate a claim signature that can be used to submit a claim](https://docs.boost.xyz/v2/api-reference/boost/generate-a-claim-signature-that-can-be-used-to-submit-a-claim.md): Given a tx hash, id, and valid claim data hash, generate a valid signature that can be used to claim a reward on chain.
+- [Get a list of Boosts](https://docs.boost.xyz/v2/api-reference/boost/get-a-list-of-boosts.md): Accepts pagination, and filter options to return a list of boosts
+- [Get details for a Boost](https://docs.boost.xyz/v2/api-reference/boost/get-details-for-a-boost.md): Return detailed information about a Boost, including budget, allowlist, incentives, actions, and token metadata
+- [Get events for a specific Boost](https://docs.boost.xyz/v2/api-reference/boost/get-events-for-a-specific-boost.md): Retrieve a history of claimed incentives
+- [OpenAPI JSON File](https://docs.boost.xyz/v2/api-reference/openapi/openapi-json.md): Download the OpenAPI JSON specification for the Boost API
+- [Get a list of reward kit rewards](https://docs.boost.xyz/v2/api-reference/rewardkit/get-a-list-of-reward-kit-rewards.md): Accepts pagination, and filter options to return a list of rewards
+- [Get a single RewardKit reward](https://docs.boost.xyz/v2/api-reference/rewardkit/get-a-single-rewardkit-reward.md): Retrieve details on a reward, optionally providing a claimant address to decorate with additional claim context.
+- [Get a user's RewardKit profile](https://docs.boost.xyz/v2/api-reference/rewardkit/get-a-users-rewardkit-profile.md): Returns a list of active, claimable, and unclaimed rewards for a given user.
+- [Try to get claim signature without known transaction](https://docs.boost.xyz/v2/api-reference/rewardkit/try-to-get-claim-signature-without-known-transaction.md): Query Dune for user transaction that can generate a valid claim signature
+- [Boost Activity](https://docs.boost.xyz/v2/boost-api/boost-activity.md): How to retrieve the claim history for a specific boost
+- [Boost Details](https://docs.boost.xyz/v2/boost-api/boost-details.md): How to retrieve a single boost by its ID
+- [Fetch Boosts](https://docs.boost.xyz/v2/boost-api/fetch-boosts.md): How to query for Boosts using various filters
+- [Get Claim Signature](https://docs.boost.xyz/v2/boost-api/get-signature.md): How to retrieve a signature required for claiming boost incentives
+- [Asset Retrieval](https://docs.boost.xyz/v2/boost-sdk/asset-retrieval.md): Learn how to retrieve assets from a budget or incentive
+- [Claiming Incentives](https://docs.boost.xyz/v2/boost-sdk/boost-core/claim-incentive.md)
+- [Get Boosts](https://docs.boost.xyz/v2/boost-sdk/boost-core/get-boosts.md)
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/boost-core/overview.md): Learn about how to use the Boost Core contract with the SDK
+- [Cloned Components](https://docs.boost.xyz/v2/boost-sdk/boost-registry/clones.md)
+- [Initializing Components](https://docs.boost.xyz/v2/boost-sdk/boost-registry/initializing-components.md)
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/boost-registry/overview.md): Learn about the role the Registry plays in the SDK
+- [Authorization](https://docs.boost.xyz/v2/boost-sdk/budgets/managed/authorization.md)
+- [Funding](https://docs.boost.xyz/v2/boost-sdk/budgets/managed/funding.md)
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/budgets/managed/overview.md): Learn about how to interact with the Managed Budget using the SDK
+- [Retrieval](https://docs.boost.xyz/v2/boost-sdk/budgets/managed/retrieval.md)
+- [Boost a Vote on Agora](https://docs.boost.xyz/v2/boost-sdk/examples/agora-vote.md): Learn how to reward users with ERC20 rewards when they vote for/against a specific proposal
+- [Claim Rewards from a Boost](https://docs.boost.xyz/v2/boost-sdk/examples/claim-example.md): Learn how to claim rewards from a Boost
+- [Deploy a Boost](https://docs.boost.xyz/v2/boost-sdk/examples/deploy-example.md): Learn how to deploy a Boost using the Boost SDK
+- [Boost an NFT Mint on Zora](https://docs.boost.xyz/v2/boost-sdk/examples/zora-mint.md): Learn how to reward users with ERC20 rewards when they mint an NFT on Zora.
+- [Claims](https://docs.boost.xyz/v2/boost-sdk/incentives/cgda/claims.md): Retrieve ERC20 Incentive claim information and draw raffle
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/incentives/cgda/overview.md): Learn about how to interact with a Continuous Gradual Dutch Auction Incentive using the SDK
+- [Rewards](https://docs.boost.xyz/v2/boost-sdk/incentives/cgda/rewards.md): Retrieve information about ERC20 Incentive rewards
+- [Claims](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-pegged-variable-criteria/claims.md): Retrieve ERC20PeggedIncentive claim information
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-pegged-variable-criteria/overview.md): Learn about how to interact with an ERC20PeggedVariableCriteriaIncentive using the SDK
+- [Rewards](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-pegged-variable-criteria/rewards.md): Retrieve information about ERC20 Incentive rewards
+- [Claims](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-pegged/claims.md): Retrieve ERC20PeggedIncentive claim information
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-pegged/overview.md): Learn about how to interact with an ERC20PeggedIncentive using the SDK
+- [Rewards](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-pegged/rewards.md): Retrieve information about ERC20 Incentive rewards
+- [Claims](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-variable-criteria/claims.md): Retrieve ERC20 Incentive claim information and draw raffle
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-variable-criteria/overview.md): Learn about how to interact with an ERC20 Variable Criteria Incentive using the SDK
+- [Rewards](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-variable-criteria/rewards.md): Retrieve information about ERC20 Incentive rewards
+- [Claims](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-variable/claims.md): Retrieve ERC20 Incentive claim information and draw raffle
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-variable/overview.md): Learn about how to interact with an ERC20Variable Incentive using the SDK
+- [Rewards](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20-variable/rewards.md): Retrieve information about ERC20 Incentive rewards
+- [Claims](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20/claims.md): Retrieve ERC20 Incentive claim information and draw raffle
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20/overview.md): Learn about how to interact with an ERC20Incentive using the SDK
+- [Rewards](https://docs.boost.xyz/v2/boost-sdk/incentives/erc20/rewards.md): Retrieve information about ERC20 Incentive rewards
+- [Installation](https://docs.boost.xyz/v2/boost-sdk/installation.md)
+- [Integrating your Protocol or DApp](https://docs.boost.xyz/v2/boost-sdk/integrating-your-contracts.md): How to add your contracts' function and event signatures into Boost's well-known registry
+- [Overview](https://docs.boost.xyz/v2/boost-sdk/overview.md): Interacting directly with Boosts in Node and the Browser
+- [Protocol Fees](https://docs.boost.xyz/v2/boost-sdk/protocol-fees.md): How fees work and how to calculate them
+- [Quick Start](https://docs.boost.xyz/v2/boost-sdk/quick-start.md)
+- [Usage With React](https://docs.boost.xyz/v2/boost-sdk/usage-with-react.md): Learn how to use with React or Next.js
+- [Working with Events](https://docs.boost.xyz/v2/boost-sdk/working-with-events.md): Learn how to get logs and listen for new events emitted by the protocol
+- [Understanding the Action Section](https://docs.boost.xyz/v2/documentation/action-creation/action-section.md): Learn how to interpret the main transaction details on Etherscan
+- [Advanced Techniques and Best Practices](https://docs.boost.xyz/v2/documentation/action-creation/advanced-techniques.md): Learn advanced strategies for creating effective Boost actions
+- [Identifying Claimant Information](https://docs.boost.xyz/v2/documentation/action-creation/claimant-information.md): Learn how to determine the Claimant for your Boost action
+- [Effective actions](https://docs.boost.xyz/v2/documentation/action-creation/effective-actions.md)
+- [Getting Started with Etherscan](https://docs.boost.xyz/v2/documentation/action-creation/getting-started.md): Learn how to navigate Etherscan to find transaction information
+- [Introduction to Boost Action Creation](https://docs.boost.xyz/v2/documentation/action-creation/introduction.md): Learn the basics of creating effective Boost actions
+- [Analyzing the Logs Section](https://docs.boost.xyz/v2/documentation/action-creation/logs-section.md): Learn how to use transaction logs to create more precise Boost actions
+- [Working with Parameter Filters](https://docs.boost.xyz/v2/documentation/action-creation/parameter-filters.md): Learn how to use parameter filters to refine your Boost action
+- [Practical tips](https://docs.boost.xyz/v2/documentation/action-creation/practical-tips.md)
+- [Understanding Etherscan Data](https://docs.boost.xyz/v2/documentation/action-creation/understanding-etherscan-data.md): Learn how to interpret transaction data on Etherscan for Boost actions
+- [One-Time Actions Architecture](https://docs.boost.xyz/v2/documentation/architecture/core-boost-v2.md): An overview of the One-Time Actions protocol architecture and its components
+- [Deployed Contracts](https://docs.boost.xyz/v2/documentation/contract-deployments/contracts.md): Overview of deployed contract addresses across all supported networks
+- [Deploying a One-Time Action](https://docs.boost.xyz/v2/documentation/getting-started/deploying-a-boost.md): Select an action, configure rewards, and launch your boost campaign
+- [Managing One-Time Actions](https://docs.boost.xyz/v2/documentation/getting-started/managing-boosts.md): Monitor, modify, and manage your active boost campaigns
+- [Setting up Accounts](https://docs.boost.xyz/v2/documentation/getting-started/setting-up-accounts.md): Create and configure your team and budget accounts to start deploying boosts
+- [Setting up an Action](https://docs.boost.xyz/v2/documentation/getting-started/setting-up-an-action.md): Configure the on-chain action you want to incentivize with your boost
+- [Boost API](https://docs.boost.xyz/v2/documentation/links/boost-api.md): Develop using the Boost API
+- [Boost API Reference](https://docs.boost.xyz/v2/documentation/links/boost-api-reference.md): Reference for the Boost API
+- [Boost SDK](https://docs.boost.xyz/v2/documentation/links/boost-sdk.md): Develop using the Boost SDK
+- [One-Time Actions](https://docs.boost.xyz/v2/documentation/overview/introduction.md): Reward users once when they complete a qualifying onchain action
+- [Frequently Asked Questions](https://docs.boost.xyz/v2/documentation/support/faqs.md): Common questions about Boost campaigns, fees, supported chains, and how rewards reach users
+- [Joining the Boost Community](https://docs.boost.xyz/v2/documentation/support/joining-boost-community.md): Where to find the Boost team, ask questions, and connect with other protocols running campaigns
+
+## OpenAPI Specs
+
+- [openapi](https://api-v2.boost.xyz/openapi.json)

@@ -1,8 +1,27 @@
 aid: boost
 name: Boost
-description: 'Boost is a company surfaced as a portfolio company of electric-capital, greylock and added
-  to the API Evangelist network as a stub for enrichment. Sector: crypto. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Boost is a distributed onchain incentives network that lets any team reward any
+  onchain action with any token. Teams define target actions, fund a budget, and
+  deploy campaigns across Base, Optimism, Arbitrum and other EVM chains, then
+  measure ROI and iterate in real time. Boost ships two products — One-Time Actions
+  and Time-Based Incentives (TBI) — plus RewardKit and a Headless SDK for embedding
+  reward primitives, a public read-only Boost V2 REST API, a TypeScript SDK, a CLI,
+  and a published MCP server. Founded by Ido Ben-Natan and Raz Niv and backed by
+  Electric Capital and Greylock.
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.boost.xyz/og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/boost/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -13,11 +32,114 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Crypto
-apis: []
+- Web3
+- Incentives
+- Rewards
+- Blockchain
+- DeFi
+- Onchain
+- EVM
+apis:
+- aid: boost:boost-action-api
+  name: Boost Action API
+  description: The Action API from Boost — 2 operation(s) for action.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - Action
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-action-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-action-template-api
+  name: Boost Action Template API
+  description: The Action Template API from Boost — 2 operation(s) for action template.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - Action Template
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-action-template-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-blocklist-api
+  name: Boost Blocklist API
+  description: The Blocklist API from Boost — 1 operation(s) for blocklist.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - Blocklist
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-blocklist-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-boost-api
+  name: Boost Boost API
+  description: The Boost API from Boost — 9 operation(s) for boost.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - Boost
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-boost-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-budget-api
+  name: Boost Budget API
+  description: The Budget API from Boost — 2 operation(s) for budget.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - Budget
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-budget-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-contract-api
+  name: Boost Contract API
+  description: The Contract API from Boost — 2 operation(s) for contract.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - Contract
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-contract-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-rewardkit-api
+  name: Boost RewardKit API
+  description: The RewardKit API from Boost — 3 operation(s) for rewardkit.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - RewardKit
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-rewardkit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
+- aid: boost:boost-rewardkittrending-api
+  name: Boost RewardKitTrending API
+  description: The RewardKitTrending API from Boost — 1 operation(s) for rewardkittrending.
+  humanURL: https://docs.boost.xyz/v2/api-reference
+  baseURL: https://api-v2.boost.xyz
+  tags:
+  - RewardKitTrending
+  properties:
+  - type: OpenAPI
+    url: openapi/boost-rewardkittrending-api-openapi.yml
+  - type: Documentation
+    url: https://docs.boost.xyz/v2/api-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -26,3 +148,56 @@ maintainers:
 common:
 - type: Website
   url: https://boost.xyz/
+- type: DeveloperPortal
+  url: https://docs.boost.xyz/
+- type: Documentation
+  url: https://docs.boost.xyz/
+- type: APIReference
+  url: https://docs.boost.xyz/v2/api-reference
+- type: GettingStarted
+  url: https://docs.boost.xyz/platform/overview
+- type: Support
+  url: https://discord.gg/gdu3EpeqsD
+- type: GitHubOrganization
+  url: https://github.com/boostxyz
+- type: SignUp
+  url: https://app.boost.xyz
+- type: Packages
+  url: packages/boost-packages.yml
+- type: SDKs
+  url: packages/boost-packages.yml
+- type: CLI
+  url: cli/boost-cli.yml
+- type: Components
+  url: components/boost-components.yml
+- type: MCPServer
+  url: mcp/boost-mcp.yml
+- type: LLMsTxt
+  url: llms/boost-llms.txt
+- type: WellKnown
+  url: well-known/boost-well-known.yml
+- type: Conventions
+  url: conventions/boost-conventions.yml
+- type: ErrorCatalog
+  url: errors/boost-problem-types.yml
+- type: Conformance
+  url: conformance/boost-conformance.yml
+- type: Authentication
+  url: authentication/boost-authentication.yml
+- type: DataModel
+  url: data-model/boost-data-model.yml
+- type: Overlay
+  url: overlays/boost-v2-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Lifecycle
+  url: lifecycle/boost-lifecycle.yml
+- type: AgenticAccess
+  url: agentic-access/boost-agentic-access.yml
+- type: DomainSecurity
+  url: security/boost-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

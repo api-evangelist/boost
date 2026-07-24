@@ -1,0 +1,33 @@
+generated: '2026-07-18'
+method: searched
+status: published
+source: https://www.npmjs.com/package/@boostxyz/api-mcp
+server:
+  name: boost-api-mcp
+  package: "@boostxyz/api-mcp"
+  transport: stdio
+  install: npm install @boostxyz/api-mcp
+  description: An MCP server that provides AI-powered integration with the Boost V2 and RewardKit APIs.
+  docs: https://docs.boost.xyz/v2/api-reference/openapi-json
+tools:
+  - name: list_boosts
+    description: Get a paginated list of Boosts with optional filters
+    source_operation: openapi/boost-v2-openapi.json#getBoosts
+  - name: get_boost
+    description: Get details for a Boost
+    source_operation: openapi/boost-v2-openapi.json#getBoost
+  - name: get_boost_activity
+    description: Get events (claim history) for a specific Boost
+    source_operation: openapi/boost-v2-openapi.json#getBoostActivity
+  - name: get_claim_signature
+    description: Generate a claim signature that can be used to submit a claim
+    source_operation: openapi/boost-v2-openapi.json#getSignatures
+  - name: list_reward_kit_rewards
+    description: Get a paginated list of RewardKit rewards
+    source_operation: openapi/boost-v2-openapi.json#getRewardKitRewards
+  - name: get_reward_kit_profile
+    description: Get a user's RewardKit profile
+    source_operation: openapi/boost-v2-openapi.json#getRewardKit
+  - name: get_trending_rewards
+    description: Get trending RewardKit rewards
+    source_operation: openapi/boost-v2-openapi.json#getRewardKitTrending

@@ -1,0 +1,20 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.boost.xyz/v2/api-reference
+versioning:
+  scheme: uri-host
+  current: v2
+  detail: >
+    The current API is Boost V2, exposed at https://api-v2.boost.xyz and documented
+    under the /v2/ docs tree. The version is carried in the host and docs path.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No published deprecation policy or RFC 8594 Sunset/Deprecation header support found.
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+notes: >
+  No dedicated status page (status.boost.xyz returns 404) and no dated changelog page
+  were found as of the probe date. Support runs through Discord and support@boost.xyz.

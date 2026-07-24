@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: searched
+source: https://www.npmjs.com/package/@boostxyz/cli
+cli:
+  name: boost
+  package: "@boostxyz/cli"
+  version: 7.0.3
+  license: GPL-3.0-or-later
+  repository: https://github.com/boostxyz/boost-protocol
+  description: CLI of useful scripts to interact with the Boost V2 protocol.
+  install:
+    - npm install -g @boostxyz/cli
+  notes: >
+    First-party CLI distributed on npm as part of the Boost Protocol monorepo. Provides
+    scripts to interact with the on-chain Boost V2 protocol (deploy/manage boosts,
+    budgets, and incentives). Command surface is versioned with the protocol.

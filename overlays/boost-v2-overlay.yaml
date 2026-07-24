@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Boost V2 API
+  version: 1.0.0
+extends: openapi/boost-v2-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: boost
+      x-apievangelist-category: crypto
+      x-apievangelist-auth: none-public
+      x-apievangelist-pagination: offset (page/pageSize, max 100)
+      x-apievangelist-mcp: "@boostxyz/api-mcp"
+  - target: $.info
+    update:
+      description: >-
+        Boost V2 API — a public, read-only REST API for the Boost onchain
+        incentives network. Query boosts, budgets, action templates, RewardKit
+        rewards, and generate claim signatures across supported EVM chains.
+        Base URL https://api-v2.boost.xyz; no authentication required.

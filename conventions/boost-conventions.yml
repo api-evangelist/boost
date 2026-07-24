@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.boost.xyz/v2/boost-api/fetch-boosts
+description: >
+  Cross-cutting request/response semantics for the Boost V2 REST API
+  (https://api-v2.boost.xyz). Derived from the OpenAPI and the API guides.
+authentication:
+  style: none
+  detail: >
+    The Boost V2 read API is public and unauthenticated. Requests are made
+    directly to https://api-v2.boost.xyz with no API key or bearer token.
+  ref: authentication/boost-authentication.yml
+pagination:
+  style: offset
+  params: [page, pageSize]
+  max_page_size: 100
+  response_fields: [boosts]
+  notes: >
+    Offset-based pagination. Iterate by incrementing `page`; stop when the
+    returned collection array (e.g. `boosts`) is empty. Maximum pageSize is 100.
+filtering:
+  common_params: [chainId, owner, budgetAccount, status, tokenAddress, sortBy, timePeriod]
+  notes: Most list endpoints accept chain, owner, and status filters as query parameters.
+idempotency:
+  supported: false
+  notes: >
+    All published Boost V2 API operations are read-only GET requests, so there is
+    no idempotency-key contract. State-changing operations happen on-chain via the
+    protocol contracts and SDK, not via this REST API.
+error_envelope:
+  media_type: application/json
+  shape: '{ "error": string | { "message": string, ... } }'
+  ref: errors/boost-problem-types.yml
+versioning:
+  scheme: uri-host
+  current: v2
+  detail: Version carried in the API host (api-v2.boost.xyz) and the /v2/ docs path.
+  ref: lifecycle/boost-lifecycle.yml
+rate_limiting:
+  documented: false
+  notes: No published rate-limit policy or rate-limit response headers documented.

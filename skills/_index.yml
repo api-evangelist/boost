@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/boost-v2-openapi.json
+skills:
+  - file: boost-explore-boosts.md
+    name: Explore and inspect Boosts
+    api: openapi/boost-v2-openapi.json
+    operations: [getBoosts, getBoost, getBoostActivity, exploreBoosts]
+  - file: boost-claim-rewards.md
+    name: Generate a Boost claim signature
+    api: openapi/boost-v2-openapi.json
+    operations: [getClaimableSignatures, getSignatures, getBoost]
+  - file: boost-rewardkit-profile.md
+    name: Surface RewardKit rewards for a user
+    api: openapi/boost-v2-openapi.json
+    operations: [getRewardKit, getRewardKitRewards, getRewardKitReward, getRewardKitTrending]
