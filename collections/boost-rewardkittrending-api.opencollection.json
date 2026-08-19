@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Boost V2 Action RewardKitTrending API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RewardKitTrending",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get trending rewards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/reward-kit/trending",
+            "params": [
+              {
+                "name": "budgetAccount",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "autoboostId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetContract",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokens",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "distributionChannel",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokenWhitelist",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "creatorAddress",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "claimantAddress",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actionType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "excludeActionType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeTokenMetadata",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of boosts that are trending based on the volume in the specified time period (1h or 24h)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

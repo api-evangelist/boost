@@ -1,0 +1,228 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Boost V2 Action RewardKit API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RewardKit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of reward kit rewards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/reward-kit/boosts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "budgetAccount",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "autoboostId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetContract",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokens",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "distributionChannel",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokenWhitelist",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "creatorAddress",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "claimantAddress",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actionType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "excludeActionType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeTokenMetadata",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Accepts pagination, and filter options to return a list of rewards"
+        },
+        {
+          "info": {
+            "name": "Get a user's RewardKit profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/reward-kit",
+            "params": [
+              {
+                "name": "budgetAccount",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "autoboostId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetContract",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokens",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "distributionChannel",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokenWhitelist",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "creatorAddress",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "claimantAddress",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actionType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "excludeActionType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeTokenMetadata",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of active, claimable, and unclaimed rewards for a given user."
+        },
+        {
+          "info": {
+            "name": "Get a single RewardKit reward",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/reward-kit/boosts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "BoostID in format chainId:boostCoreAddress:identifier"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeTokenMetadata",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve details on a reward, optionally providing a claimant address to decorate with additional claim context."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

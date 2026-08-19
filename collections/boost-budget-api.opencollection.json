@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Boost V2 Action Budget API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Budget",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a single Budget by its system ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/budget-accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID in format chainId:identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a Budget Account, including contract address, chain ID, owner address, label, and members if applicable."
+        },
+        {
+          "info": {
+            "name": "Get Budgets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/budget-accounts",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "member",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Accepts pagination, and filter options like owner address, chain ID, and permissioned member address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

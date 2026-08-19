@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Boost V2 Action Contract API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contract",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find event and function signatures used in Boost configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/known-signatures",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve event or function signatures, human readable signature and their ABI which can be used when configuring Boost Actions."
+        },
+        {
+          "info": {
+            "name": "Explore contracts with Boosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/explore/contracts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timePeriod",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actionChainIds",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userAddress",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Find information on contracts used to interact with Boosts, as well as total claims, total USD claimed, address, and chain ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

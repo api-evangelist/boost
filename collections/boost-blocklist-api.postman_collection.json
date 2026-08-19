@@ -1,0 +1,131 @@
+{
+  "item": [
+    {
+      "id": "4b387944-fd05-437b-be78-1dc5ab806163",
+      "name": "Blocklist",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c7f9114-fb80-4e2c-990e-b8a084564f1f",
+          "name": "get Blocklist",
+          "request": {
+            "name": "get Blocklist",
+            "description": {},
+            "url": {
+              "path": [
+                "blocklist",
+                ":chainId",
+                ":tokenAddress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "chainId"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tokenAddress",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5502a8cf-07d1-4b87-9f51-1777f26054d3",
+              "name": "Returns whether or not the token is blocked on given chain id",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blocklist",
+                    ":chainId",
+                    ":tokenAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "chainId"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenAddress",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"isBlocked\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-v2.boost.xyz",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a3ba7926-7986-437f-8c12-0cce528776c2",
+    "name": "Boost V2 Action Blocklist API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Get Boosts and sign claims for the Boost Validator\n\nContact Support:\n Email: support@boost.xyz",
+      "type": "text/plain"
+    }
+  }
+}

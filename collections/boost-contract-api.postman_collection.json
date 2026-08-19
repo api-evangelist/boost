@@ -1,0 +1,242 @@
+{
+  "item": [
+    {
+      "id": "cbdff866-33d9-474c-8b28-47a55690ed08",
+      "name": "Contract",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f7bff773-ca80-4ab8-8316-2b18bf2e8e03",
+          "name": "Find event and function signatures used in Boost configurations",
+          "request": {
+            "name": "Find event and function signatures used in Boost configurations",
+            "description": {
+              "content": "Retrieve event or function signatures, human readable signature and their ABI which can be used when configuring Boost Actions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "known-signatures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "10"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "072026f8-183b-444a-b80f-f64d133c2bb2",
+              "name": "Returns a list of Boosts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "known-signatures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"signatures\": [\n    {\n      \"id\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n      \"textSignature\": \"mint(address mintTo,uint256 quantity,address collection,uint256 tokenId,address mintReferral,string comment)\",\n      \"signatureType\": \"function\",\n      \"abiItem\": {\n        \"name\": \"mint\",\n        \"type\": \"function\",\n        \"inputs\": [\n          {\n            \"name\": \"mintTo\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"quantity\",\n            \"type\": \"uint256\"\n          },\n          {\n            \"name\": \"collection\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"tokenId\",\n            \"type\": \"uint256\"\n          },\n          {\n            \"name\": \"mintReferral\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"comment\",\n            \"type\": \"string\"\n          }\n        ],\n        \"outputs\": [],\n        \"stateMutability\": \"nonpayable\"\n      }\n    },\n    {\n      \"id\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n      \"textSignature\": \"mint(address mintTo,uint256 quantity,address collection,uint256 tokenId,address mintReferral,string comment)\",\n      \"signatureType\": \"function\",\n      \"abiItem\": {\n        \"name\": \"mint\",\n        \"type\": \"function\",\n        \"inputs\": [\n          {\n            \"name\": \"mintTo\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"quantity\",\n            \"type\": \"uint256\"\n          },\n          {\n            \"name\": \"collection\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"tokenId\",\n            \"type\": \"uint256\"\n          },\n          {\n            \"name\": \"mintReferral\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"comment\",\n            \"type\": \"string\"\n          }\n        ],\n        \"outputs\": [],\n        \"stateMutability\": \"nonpayable\"\n      }\n    }\n  ],\n  \"count\": 7121.3615188179665\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9092e6eb-96bf-44a7-b776-780d05e08185",
+          "name": "Explore contracts with Boosts",
+          "request": {
+            "name": "Explore contracts with Boosts",
+            "description": {
+              "content": "Find information on contracts used to interact with Boosts, as well as total claims, total USD claimed, address, and chain ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "explore",
+                "contracts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "timePeriod",
+                  "value": "7d"
+                },
+                {
+                  "disabled": false,
+                  "key": "userAddress",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a4f13d1-77e5-48fe-98ba-f2c534d9b707",
+              "name": "Returns a list of smart contracts known to the Boost system",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "explore",
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "most-completions"
+                    },
+                    {
+                      "key": "timePeriod",
+                      "value": "7d"
+                    },
+                    {
+                      "key": "userAddress",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"chainId\": 8453,\n    \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n    \"name\": \"Zora\",\n    \"stats\": {\n      \"boostCount\": 9271.05528227103,\n      \"totalClaims\": 2519.020986474567,\n      \"totalAmountClaimedUsd\": 9817.1324013201\n    }\n  },\n  {\n    \"chainId\": 8453,\n    \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n    \"name\": \"Zora\",\n    \"stats\": {\n      \"boostCount\": 7615.794709288563,\n      \"totalClaims\": 2263.590076221206,\n      \"totalAmountClaimedUsd\": 3122.052982289235\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-v2.boost.xyz",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c7f58b6b-962c-46fe-9668-a952d340d582",
+    "name": "Boost V2 Action Contract API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Get Boosts and sign claims for the Boost Validator\n\nContact Support:\n Email: support@boost.xyz",
+      "type": "text/plain"
+    }
+  }
+}

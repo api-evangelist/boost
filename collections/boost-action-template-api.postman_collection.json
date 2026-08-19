@@ -1,0 +1,239 @@
+{
+  "item": [
+    {
+      "id": "6f53da7d-0832-48a5-b04c-fea1dc59c732",
+      "name": "Action Template",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "570cb646-1fc5-4664-b6d8-1cc525d0b0e6",
+          "name": "Get all Action Templates",
+          "request": {
+            "name": "Get all Action Templates",
+            "description": {
+              "content": "Returns all known Action Templates that can aid in initializing new Boost Actions and Incentives, with information about project smart contract deployments, event and function signatures, claimant configuration information, and placeholder reward configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "action-templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "onlyActive",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33c2454a-4b2d-4cf7-bf5b-a649e8e12aed",
+              "name": "Returns a list of all Action Templates registered to the system",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "action-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "onlyActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "status",
+                      "value": "approved,pending"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"actionTemplate\": {\n      \"id\": \"string\",\n      \"actionType\": \"mint\",\n      \"description\": \"Reward any who buys a specific ERC-20 token on Zora\",\n      \"title\": \"Buy a specific token\",\n      \"boostConfig\": {\n        \"selectedContract\": {\n          \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n          \"contract_name\": \"string\",\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"deployment_information\": {\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"network_id\": \"8453\"\n          }\n        },\n        \"selectedSignature\": \"event CoinCreated(address indexed caller, address indexed payoutRecipient, address indexed platformReferrer, address currency, string uri, string name, string symbol, address coin, address pool, string version)\",\n        \"parameterFilters\": [\n          {\n            \"id\": \"string\",\n            \"parameter\": \"to:1\",\n            \"comparator\": \"==\",\n            \"value\": \"string\",\n            \"tupleParameter\": \"string\",\n            \"tupleParameters\": [\n              \"field1:1\"\n            ]\n          },\n          {\n            \"id\": \"string\",\n            \"parameter\": \"to:1\",\n            \"comparator\": \"==\",\n            \"value\": \"string\",\n            \"tupleParameter\": \"string\",\n            \"tupleParameters\": [\n              \"field1:1\"\n            ]\n          }\n        ],\n        \"logFilters\": [\n          {\n            \"id\": \"string\",\n            \"contract\": {\n              \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n              \"contract_name\": \"string\",\n              \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n              \"deployment_information\": {\n                \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n                \"network_id\": \"8453\"\n              }\n            },\n            \"signature\": \"event Transfer(address indexed from, address indexed to, uint256 amount)\",\n            \"parameters\": [\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              },\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              }\n            ],\n            \"signatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\"\n          },\n          {\n            \"id\": \"string\",\n            \"contract\": {\n              \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n              \"contract_name\": \"string\",\n              \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n              \"deployment_information\": {\n                \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n                \"network_id\": \"8453\"\n              }\n            },\n            \"signature\": \"event Transfer(address indexed from, address indexed to, uint256 amount)\",\n            \"parameters\": [\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              },\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              }\n            ],\n            \"signatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\"\n          }\n        ],\n        \"claimantContract\": {\n          \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n          \"contract_name\": \"ZoraTimedSaleStrategy\",\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"deployment_information\": {\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"network_id\": \"7777777\"\n          }\n        },\n        \"claimantSignature\": \"function mint(address mintTo, uint256 quantity, address collection, uint256 tokenId, address mintReferral, string comment) payable\",\n        \"claimantParameterMapping\": \"mintTo\",\n        \"reward\": {\n          \"budget\": \"string\",\n          \"amount\": \"string\",\n          \"rebatePercentage\": 6300.461442008009,\n          \"type\": \"pegged-variable-criteria\",\n          \"peg\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n        },\n        \"selectedSignatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n        \"selectedAbiItem\": {},\n        \"claimantSignatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n        \"criteria\": {\n          \"signature\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n          \"valueType\": 5523.643061118977,\n          \"fieldIndex\": 4807.624769051991,\n          \"criteriaType\": 1399.2690805367447,\n          \"targetContract\": \"string\"\n        },\n        \"rewardMultiplier\": \"4000000000000\",\n        \"distributionChannel\": [\n          \"worldcoin\",\n          \"worldcoin\"\n        ]\n      },\n      \"nameConfig\": {\n        \"template\": \"string\",\n        \"boostNameGenerator\": \"string\",\n        \"abiFilters\": [\n          {\n            \"signature\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n            \"inputArgIndexes\": [\n              597.1576306207138,\n              6974.208281238096\n            ],\n            \"inputArgValues\": [\n              \"string\",\n              \"string\"\n            ],\n            \"targetContract\": \"string\"\n          },\n          {\n            \"signature\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n            \"inputArgIndexes\": [\n              9751.208190090158,\n              915.1242815008331\n            ],\n            \"inputArgValues\": [\n              \"string\",\n              \"string\"\n            ],\n            \"targetContract\": \"string\"\n          }\n        ]\n      },\n      \"isActive\": false,\n      \"urlTemplate\": \"string\",\n      \"allowlist\": [\n        \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n      ],\n      \"distributionChannel\": [\n        \"public\",\n        \"celo\"\n      ],\n      \"verificationLevel\": \"string\",\n      \"builderMetadata\": {\n        \"createdAt\": \"2001-03-26T00:01:13.286Z\",\n        \"actionChain\": 8663,\n        \"budgetAccount\": {\n          \"chainId\": 6754,\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n        },\n        \"txHash\": \"string\",\n        \"description\": \"string\",\n        \"contactInfo\": \"string\",\n        \"projectUrl\": \"http://YPXHJoeZYyTTOr.ahkgl7KO+aVFtM858gdHG8xBvSTlUM3RuEtz\",\n        \"projectIconUrl\": \"https://EyfrHig.cjTLlGSMQhy8\",\n        \"isProjectCreator\": false\n      },\n      \"status\": \"rejected\",\n      \"category\": \"nft\",\n      \"projectId\": \"zora\"\n    },\n    \"project\": {\n      \"id\": \"zora\",\n      \"url\": \"string\",\n      \"icon\": \"string\"\n    }\n  },\n  {\n    \"actionTemplate\": {\n      \"id\": \"string\",\n      \"actionType\": \"mint\",\n      \"description\": \"Reward any who buys a specific ERC-20 token on Zora\",\n      \"title\": \"Buy a specific token\",\n      \"boostConfig\": {\n        \"selectedContract\": {\n          \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n          \"contract_name\": \"string\",\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"deployment_information\": {\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"network_id\": \"8453\"\n          }\n        },\n        \"selectedSignature\": \"event CoinCreated(address indexed caller, address indexed payoutRecipient, address indexed platformReferrer, address currency, string uri, string name, string symbol, address coin, address pool, string version)\",\n        \"parameterFilters\": [\n          {\n            \"id\": \"string\",\n            \"parameter\": \"to:1\",\n            \"comparator\": \"==\",\n            \"value\": \"string\",\n            \"tupleParameter\": \"string\",\n            \"tupleParameters\": [\n              \"field1:1\"\n            ]\n          },\n          {\n            \"id\": \"string\",\n            \"parameter\": \"to:1\",\n            \"comparator\": \"==\",\n            \"value\": \"string\",\n            \"tupleParameter\": \"string\",\n            \"tupleParameters\": [\n              \"field1:1\"\n            ]\n          }\n        ],\n        \"logFilters\": [\n          {\n            \"id\": \"string\",\n            \"contract\": {\n              \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n              \"contract_name\": \"string\",\n              \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n              \"deployment_information\": {\n                \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n                \"network_id\": \"8453\"\n              }\n            },\n            \"signature\": \"event Transfer(address indexed from, address indexed to, uint256 amount)\",\n            \"parameters\": [\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              },\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              }\n            ],\n            \"signatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\"\n          },\n          {\n            \"id\": \"string\",\n            \"contract\": {\n              \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n              \"contract_name\": \"string\",\n              \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n              \"deployment_information\": {\n                \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n                \"network_id\": \"8453\"\n              }\n            },\n            \"signature\": \"event Transfer(address indexed from, address indexed to, uint256 amount)\",\n            \"parameters\": [\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              },\n              {\n                \"id\": \"string\",\n                \"parameter\": \"to:1\",\n                \"comparator\": \"==\",\n                \"value\": \"string\",\n                \"tupleParameter\": \"string\",\n                \"tupleParameters\": [\n                  \"field1:1\"\n                ]\n              }\n            ],\n            \"signatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\"\n          }\n        ],\n        \"claimantContract\": {\n          \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n          \"contract_name\": \"ZoraTimedSaleStrategy\",\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"deployment_information\": {\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"network_id\": \"7777777\"\n          }\n        },\n        \"claimantSignature\": \"function mint(address mintTo, uint256 quantity, address collection, uint256 tokenId, address mintReferral, string comment) payable\",\n        \"claimantParameterMapping\": \"mintTo\",\n        \"reward\": {\n          \"budget\": \"string\",\n          \"amount\": \"string\",\n          \"rebatePercentage\": 888.3938111211864,\n          \"type\": \"pegged-variable-criteria\",\n          \"peg\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n        },\n        \"selectedSignatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n        \"selectedAbiItem\": {},\n        \"claimantSignatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n        \"criteria\": {\n          \"signature\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n          \"valueType\": 2462.9121053084223,\n          \"fieldIndex\": 6419.888842474955,\n          \"criteriaType\": 138.85516519628993,\n          \"targetContract\": \"string\"\n        },\n        \"rewardMultiplier\": \"4000000000000\",\n        \"distributionChannel\": [\n          \"celo\",\n          \"celo\"\n        ]\n      },\n      \"nameConfig\": {\n        \"template\": \"string\",\n        \"boostNameGenerator\": \"string\",\n        \"abiFilters\": [\n          {\n            \"signature\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n            \"inputArgIndexes\": [\n              1346.8274407477177,\n              3582.5350003952717\n            ],\n            \"inputArgValues\": [\n              \"string\",\n              \"string\"\n            ],\n            \"targetContract\": \"string\"\n          },\n          {\n            \"signature\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n            \"inputArgIndexes\": [\n              2477.0409205895303,\n              1447.0037036895621\n            ],\n            \"inputArgValues\": [\n              \"string\",\n              \"string\"\n            ],\n            \"targetContract\": \"string\"\n          }\n        ]\n      },\n      \"isActive\": false,\n      \"urlTemplate\": \"string\",\n      \"allowlist\": [\n        \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n      ],\n      \"distributionChannel\": [\n        \"celo\",\n        \"farcaster\"\n      ],\n      \"verificationLevel\": \"string\",\n      \"builderMetadata\": {\n        \"createdAt\": \"1958-10-14T21:33:03.619Z\",\n        \"actionChain\": 1346,\n        \"budgetAccount\": {\n          \"chainId\": 6056,\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n        },\n        \"txHash\": \"string\",\n        \"description\": \"string\",\n        \"contactInfo\": \"string\",\n        \"projectUrl\": \"https://bbIYm.jxjyrZo05Y+t+C.HyIxlpQd\",\n        \"projectIconUrl\": \"http://erLvSwnCQncqezSleyZWujkGYUJ.nmgd2GiTdLb9\",\n        \"isProjectCreator\": false\n      },\n      \"status\": \"rejected\",\n      \"category\": \"social\",\n      \"projectId\": \"zora\"\n    },\n    \"project\": {\n      \"id\": \"zora\",\n      \"url\": \"string\",\n      \"icon\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d5fafa3-177c-4868-86d9-e6a3cd6e17c4",
+          "name": "Get an Action Template by actionTemplateId",
+          "request": {
+            "name": "Get an Action Template by actionTemplateId",
+            "description": {
+              "content": "Returns an Action Template by actionTemplateId",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "action-templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3dba44c9-2608-4538-a668-9c9d69cd3c3b",
+              "name": "Returns a specific Action Template by actionTemplateId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "action-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actionTemplate\": {\n    \"id\": \"string\",\n    \"actionType\": \"mint\",\n    \"description\": \"Reward any who buys a specific ERC-20 token on Zora\",\n    \"title\": \"Buy a specific token\",\n    \"boostConfig\": {\n      \"selectedContract\": {\n        \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n        \"contract_name\": \"string\",\n        \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"deployment_information\": {\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"network_id\": \"8453\"\n        }\n      },\n      \"selectedSignature\": \"event CoinCreated(address indexed caller, address indexed payoutRecipient, address indexed platformReferrer, address currency, string uri, string name, string symbol, address coin, address pool, string version)\",\n      \"parameterFilters\": [\n        {\n          \"id\": \"string\",\n          \"parameter\": \"to:1\",\n          \"comparator\": \"==\",\n          \"value\": \"string\",\n          \"tupleParameter\": \"string\",\n          \"tupleParameters\": [\n            \"field1:1\"\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"parameter\": \"to:1\",\n          \"comparator\": \"==\",\n          \"value\": \"string\",\n          \"tupleParameter\": \"string\",\n          \"tupleParameters\": [\n            \"field1:1\"\n          ]\n        }\n      ],\n      \"logFilters\": [\n        {\n          \"id\": \"string\",\n          \"contract\": {\n            \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n            \"contract_name\": \"string\",\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"deployment_information\": {\n              \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n              \"network_id\": \"8453\"\n            }\n          },\n          \"signature\": \"event Transfer(address indexed from, address indexed to, uint256 amount)\",\n          \"parameters\": [\n            {\n              \"id\": \"string\",\n              \"parameter\": \"to:1\",\n              \"comparator\": \"==\",\n              \"value\": \"string\",\n              \"tupleParameter\": \"string\",\n              \"tupleParameters\": [\n                \"field1:1\"\n              ]\n            },\n            {\n              \"id\": \"string\",\n              \"parameter\": \"to:1\",\n              \"comparator\": \"==\",\n              \"value\": \"string\",\n              \"tupleParameter\": \"string\",\n              \"tupleParameters\": [\n                \"field1:1\"\n              ]\n            }\n          ],\n          \"signatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\"\n        },\n        {\n          \"id\": \"string\",\n          \"contract\": {\n            \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n            \"contract_name\": \"string\",\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"deployment_information\": {\n              \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n              \"network_id\": \"8453\"\n            }\n          },\n          \"signature\": \"event Transfer(address indexed from, address indexed to, uint256 amount)\",\n          \"parameters\": [\n            {\n              \"id\": \"string\",\n              \"parameter\": \"to:1\",\n              \"comparator\": \"==\",\n              \"value\": \"string\",\n              \"tupleParameter\": \"string\",\n              \"tupleParameters\": [\n                \"field1:1\"\n              ]\n            },\n            {\n              \"id\": \"string\",\n              \"parameter\": \"to:1\",\n              \"comparator\": \"==\",\n              \"value\": \"string\",\n              \"tupleParameter\": \"string\",\n              \"tupleParameters\": [\n                \"field1:1\"\n              ]\n            }\n          ],\n          \"signatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\"\n        }\n      ],\n      \"claimantContract\": {\n        \"ID\": \"eth:8453:0x777777751622c0d3258f214f9df38e35bf45baf3\",\n        \"contract_name\": \"ZoraTimedSaleStrategy\",\n        \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"deployment_information\": {\n          \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"network_id\": \"7777777\"\n        }\n      },\n      \"claimantSignature\": \"function mint(address mintTo, uint256 quantity, address collection, uint256 tokenId, address mintReferral, string comment) payable\",\n      \"claimantParameterMapping\": \"mintTo\",\n      \"reward\": {\n        \"budget\": \"string\",\n        \"amount\": \"string\",\n        \"rebatePercentage\": 2972.4476117216504,\n        \"type\": \"pegged-variable-criteria\",\n        \"peg\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n      },\n      \"selectedSignatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n      \"selectedAbiItem\": {},\n      \"claimantSignatureHash\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n      \"criteria\": {\n        \"signature\": \"0xb362243af1e2070d7d5bf8d713f2e0fab64203f1b71462afbe20572909788c5e\",\n        \"valueType\": 3936.542877049891,\n        \"fieldIndex\": 8313.78163549113,\n        \"criteriaType\": 686.5809710634985,\n        \"targetContract\": \"string\"\n      },\n      \"rewardMultiplier\": \"4000000000000\",\n      \"distributionChannel\": [\n        \"farcaster\",\n        \"rabbithole\"\n      ]\n    },\n    \"nameConfig\": {\n      \"template\": \"string\",\n      \"boostNameGenerator\": \"string\",\n      \"abiFilters\": [\n        {\n          \"signature\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n          \"inputArgIndexes\": [\n            7685.706168545129,\n            7691.745770827874\n          ],\n          \"inputArgValues\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targetContract\": \"string\"\n        },\n        {\n          \"signature\": \"0x00000000000000000000000000000000000000000000000000000000a836f32f\",\n          \"inputArgIndexes\": [\n            6727.939473630452,\n            5614.377304186206\n          ],\n          \"inputArgValues\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targetContract\": \"string\"\n        }\n      ]\n    },\n    \"isActive\": false,\n    \"urlTemplate\": \"string\",\n    \"allowlist\": [\n      \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n      \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n    ],\n    \"distributionChannel\": [\n      \"rabbithole\",\n      \"rabbithole\"\n    ],\n    \"verificationLevel\": \"string\",\n    \"builderMetadata\": {\n      \"createdAt\": \"1965-05-12T17:42:37.841Z\",\n      \"actionChain\": 4641,\n      \"budgetAccount\": {\n        \"chainId\": 153,\n        \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n      },\n      \"txHash\": \"string\",\n      \"description\": \"string\",\n      \"contactInfo\": \"string\",\n      \"projectUrl\": \"http://jppqrpMPmBsXJqTWXjUesybNOLXshQM.xguqoKan.LXVHyTW26DX0ySB-Iuv2qoOWPGP,QsaqhghFkyaZksk8AAvHgrqw\",\n      \"projectIconUrl\": \"https://yrtugsYIwPcAubwl.bmRb6yvIe.L5\",\n      \"isProjectCreator\": false\n    },\n    \"status\": \"pending\",\n    \"category\": \"gaming\",\n    \"projectId\": \"zora\"\n  },\n  \"project\": {\n    \"id\": \"zora\",\n    \"url\": \"string\",\n    \"icon\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2532ed00-bae3-4607-9569-c107b4b94fe4",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "action-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-v2.boost.xyz",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d15ccc8d-68aa-4e98-ac3f-439bdeaa2674",
+    "name": "Boost V2 Action Action Template API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Get Boosts and sign claims for the Boost Validator\n\nContact Support:\n Email: support@boost.xyz",
+      "type": "text/plain"
+    }
+  }
+}

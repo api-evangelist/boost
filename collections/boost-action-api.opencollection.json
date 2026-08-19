@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Boost V2 Action API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Action",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Action Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/action-templates",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "onlyActive",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all known Action Templates that can aid in initializing new Boost Actions and Incentives, with information about project smart contract deployments, event and function signatures, claimant configuration information, and placeholder reward configuration."
+        },
+        {
+          "info": {
+            "name": "Get an Action Template by actionTemplateId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/action-templates/:id"
+          },
+          "docs": "Returns an Action Template by actionTemplateId"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

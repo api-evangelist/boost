@@ -1,0 +1,300 @@
+{
+  "item": [
+    {
+      "id": "93683494-67c2-4325-8379-604b87cf579c",
+      "name": "RewardKitTrending",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "47cef7eb-e1b7-4d4b-b682-8b7cf3a4853a",
+          "name": "Get trending rewards",
+          "request": {
+            "name": "Get trending rewards",
+            "description": {
+              "content": "Returns a list of boosts that are trending based on the volume in the specified time period (1h or 24h).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reward-kit",
+                "trending"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "budgetAccount",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "autoboostId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer,null>"
+                },
+                {
+                  "disabled": false,
+                  "key": "targetContract",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokens",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "distributionChannel",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "1h"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenWhitelist",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "creatorAddress",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "claimantAddress",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTokenMetadata",
+                  "value": "<boolean,null>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d8566d9-597b-4f99-8af6-9ec95eee021a",
+              "name": "Returns a user's RewardKit profile",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reward-kit",
+                    "trending"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "budgetAccount",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7,0x1234567890123456789012345678901234567890"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "autoboostId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<integer,null>"
+                    },
+                    {
+                      "key": "targetContract",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "tokens",
+                      "value": "chainId:tokenAddress,chainId:tokenAddress:collection,..."
+                    },
+                    {
+                      "key": "distributionChannel",
+                      "value": "distributionChannel=public,farcaster"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "24h"
+                    },
+                    {
+                      "key": "tokenWhitelist",
+                      "value": "true"
+                    },
+                    {
+                      "key": "creatorAddress",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "claimantAddress",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "includeTokenMetadata",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trendingBoosts\": [\n    {\n      \"id\": \"8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1\",\n      \"chainId\": 8227.993416847297,\n      \"incentives\": [\n        {\n          \"type\": \"ERC20PeggedIncentive\",\n          \"assetAddress\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"rewardPercentage\": 50,\n          \"rebatePercentage\": 7,\n          \"rewardAmount\": \"string\",\n          \"rewardAmountFormatted\": \"string\",\n          \"maxReward\": \"string\",\n          \"maxRewardUsdValue\": 6771.618980435823,\n          \"rewardUsdValue\": 3709.8580336530686,\n          \"tokenSymbol\": \"string\",\n          \"tokenImageUri\": \"string\",\n          \"metadata\": {\n            \"id\": \"string\",\n            \"chainId\": 882.144045208505,\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"decimals\": 9757.310539686665,\n            \"name\": \"string\",\n            \"symbol\": \"string\",\n            \"imageUri\": \"string\"\n          }\n        },\n        {\n          \"type\": \"ERC20VariableCriteriaIncentive\",\n          \"assetAddress\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"rewardPercentage\": 50,\n          \"rebatePercentage\": 7,\n          \"rewardAmount\": \"string\",\n          \"rewardAmountFormatted\": \"string\",\n          \"maxReward\": \"string\",\n          \"maxRewardUsdValue\": 819.0193561327696,\n          \"rewardUsdValue\": 8208.425225744822,\n          \"tokenSymbol\": \"string\",\n          \"tokenImageUri\": \"string\",\n          \"metadata\": {\n            \"id\": \"string\",\n            \"chainId\": 8105.086635735886,\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"decimals\": 789.9810987847544,\n            \"name\": \"string\",\n            \"symbol\": \"string\",\n            \"imageUri\": \"string\"\n          }\n        }\n      ],\n      \"actionTemplate\": {\n        \"id\": \"2285f11b-4302-da3a-57d7-a34b0fe41a0e\",\n        \"projectId\": \"string\",\n        \"actionType\": \"mint\",\n        \"projectImage\": \"string\",\n        \"description\": \"string\",\n        \"category\": \"defi\"\n      },\n      \"status\": \"claimed\",\n      \"txHash\": \"string\",\n      \"boostName\": \"string\",\n      \"nftImageUri\": \"string\",\n      \"nftName\": \"string\",\n      \"tokenImageUri\": \"string\",\n      \"blockTimestamp\": \"string\",\n      \"projectUrl\": \"https://JunGeKRaJZUljwoLCIJClguSNbMhzkSdX.uwpHOsGDIk5Y\",\n      \"startTime\": \"1999-07-24T23:30:47.982Z\",\n      \"endTime\": \"2022-07-31T10:44:59.520Z\",\n      \"claimCount\": 5698,\n      \"totalBudget\": \"string\",\n      \"rewardsDistributed\": \"string\",\n      \"signature\": {\n        \"claimant\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"incentiveId\": 9685,\n        \"signature\": \"string\",\n        \"referrer\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n      },\n      \"accessStatus\": \"allowed\",\n      \"actionTokenMetadata\": {\n        \"tokenSymbol\": \"string\",\n        \"tokenContract\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"chainId\": 7799.075778118002,\n        \"tokenImage\": \"https://IFbetLAxrHsq.olwGY4D82JPshTCqrJTkoKmLXcviLMEiedXMH-,QTtyPXux9VMEStA4beWA\",\n        \"decimals\": 189.29170980914512,\n        \"marketCap\": 3260.1506666848068,\n        \"priceChange24Hr\": 269.1517809328714,\n        \"volume24Hr\": 852.600900738083,\n        \"priceUsd\": 6837.007021714914,\n        \"holders\": 4020.6885595198282\n      },\n      \"verificationLevel\": \"string\",\n      \"usdDistributed24Hr\": 12345.67,\n      \"usdDistributed1Hr\": 1234.56\n    },\n    {\n      \"id\": \"8453:0x378632819f39c74c4f56b1429e760739c5fb51b7:1\",\n      \"chainId\": 5863.278333608582,\n      \"incentives\": [\n        {\n          \"type\": \"PointsIncentive\",\n          \"assetAddress\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"rewardPercentage\": 50,\n          \"rebatePercentage\": 7,\n          \"rewardAmount\": \"string\",\n          \"rewardAmountFormatted\": \"string\",\n          \"maxReward\": \"string\",\n          \"maxRewardUsdValue\": 6985.9210759916605,\n          \"rewardUsdValue\": 2608.056971055831,\n          \"tokenSymbol\": \"string\",\n          \"tokenImageUri\": \"string\",\n          \"metadata\": {\n            \"id\": \"string\",\n            \"chainId\": 9898.213455873934,\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"decimals\": 901.5946168077982,\n            \"name\": \"string\",\n            \"symbol\": \"string\",\n            \"imageUri\": \"string\"\n          }\n        },\n        {\n          \"type\": \"ERC20PeggedIncentive\",\n          \"assetAddress\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n          \"rewardPercentage\": 50,\n          \"rebatePercentage\": 7,\n          \"rewardAmount\": \"string\",\n          \"rewardAmountFormatted\": \"string\",\n          \"maxReward\": \"string\",\n          \"maxRewardUsdValue\": 7864.262484585975,\n          \"rewardUsdValue\": 4373.387032804407,\n          \"tokenSymbol\": \"string\",\n          \"tokenImageUri\": \"string\",\n          \"metadata\": {\n            \"id\": \"string\",\n            \"chainId\": 3606.278325942851,\n            \"address\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n            \"decimals\": 9012.927868206922,\n            \"name\": \"string\",\n            \"symbol\": \"string\",\n            \"imageUri\": \"string\"\n          }\n        }\n      ],\n      \"actionTemplate\": {\n        \"id\": \"d736f9f1-e076-151c-3465-d9e35c70d7ab\",\n        \"projectId\": \"string\",\n        \"actionType\": \"mint\",\n        \"projectImage\": \"string\",\n        \"description\": \"string\",\n        \"category\": \"defi\"\n      },\n      \"status\": \"claimable\",\n      \"txHash\": \"string\",\n      \"boostName\": \"string\",\n      \"nftImageUri\": \"string\",\n      \"nftName\": \"string\",\n      \"tokenImageUri\": \"string\",\n      \"blockTimestamp\": \"string\",\n      \"projectUrl\": \"https://cGAnOrtvhLQFWEfj.nvkfk9FCmcc,9OpDEjqC\",\n      \"startTime\": \"2013-02-11T08:23:36.380Z\",\n      \"endTime\": \"1976-12-03T15:05:52.520Z\",\n      \"claimCount\": 115,\n      \"totalBudget\": \"string\",\n      \"rewardsDistributed\": \"string\",\n      \"signature\": {\n        \"claimant\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"incentiveId\": 9297,\n        \"signature\": \"string\",\n        \"referrer\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\"\n      },\n      \"accessStatus\": \"denied\",\n      \"actionTokenMetadata\": {\n        \"tokenSymbol\": \"string\",\n        \"tokenContract\": \"0x378632819f39c74c4f56b1429e760739c5fb51b7\",\n        \"chainId\": 168.8662548608344,\n        \"tokenImage\": \"https://wlNWVeYfDKCHnbaQBVTrRWBkAToiaiQE.undIAk+LqxNdmgrWYVxhz-MgJPUy-4sBi,PjNeSHj4E,xrG5Q+FnIO\",\n        \"decimals\": 9647.616716279685,\n        \"marketCap\": 6158.541050856461,\n        \"priceChange24Hr\": 6313.342836985513,\n        \"volume24Hr\": 6141.320026741913,\n        \"priceUsd\": 2279.540997446642,\n        \"holders\": 1905.9601925086156\n      },\n      \"verificationLevel\": \"string\",\n      \"usdDistributed24Hr\": 12345.67,\n      \"usdDistributed1Hr\": 1234.56\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edc04dbd-9b4e-4ce2-84dd-999484cf0ab5",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reward-kit",
+                    "trending"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "budgetAccount",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7,0x1234567890123456789012345678901234567890"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "autoboostId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<integer,null>"
+                    },
+                    {
+                      "key": "targetContract",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "tokens",
+                      "value": "chainId:tokenAddress,chainId:tokenAddress:collection,..."
+                    },
+                    {
+                      "key": "distributionChannel",
+                      "value": "distributionChannel=public,farcaster"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "24h"
+                    },
+                    {
+                      "key": "tokenWhitelist",
+                      "value": "true"
+                    },
+                    {
+                      "key": "creatorAddress",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "claimantAddress",
+                      "value": "0x378632819f39c74c4f56b1429e760739c5fb51b7"
+                    },
+                    {
+                      "key": "includeTokenMetadata",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-v2.boost.xyz",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ef1b8437-3cd3-4de0-a877-edc1b2295624",
+    "name": "Boost V2 Action RewardKitTrending API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Get Boosts and sign claims for the Boost Validator\n\nContact Support:\n Email: support@boost.xyz",
+      "type": "text/plain"
+    }
+  }
+}

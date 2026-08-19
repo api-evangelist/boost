@@ -1,0 +1,320 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "V2 Action Boost API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Boost",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find event and function signatures used in Boost configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/known-signatures",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve event or function signatures, human readable signature and their ABI which can be used when configuring Boost Actions."
+        },
+        {
+          "info": {
+            "name": "Explore contracts with Boosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/explore",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timePeriod",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actionChainIds",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userAddress",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Discover Boosts with the most claim activity, along with their action and incentive configurations, and total USD distributed."
+        },
+        {
+          "info": {
+            "name": "Generate a claim signature that can be used to submit a claim",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/signatures",
+            "params": [
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Hex in format 0x[0-9a-fA-F]{64}"
+              },
+              {
+                "name": "boostId",
+                "value": "",
+                "type": "query",
+                "description": "BoostID in format chainId:boostCoreAddress:identifier"
+              },
+              {
+                "name": "claimData",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Given a tx hash, id, and valid claim data hash, generate a valid signature that can be used to claim a reward on chain."
+        },
+        {
+          "info": {
+            "name": "Get claimable signatures for an address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/signatures/claimable/:address",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all signatures for an address that have not yet been used to claim their associated boost."
+        },
+        {
+          "info": {
+            "name": "Get a list of Boosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/boosts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "budgetAccount",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "autoboostId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetContract",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokens",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "distributionChannel",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tokenWhitelist",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actionTemplateOnly",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "showActiveOnly",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Accepts pagination, and filter options to return a list of boosts"
+        },
+        {
+          "info": {
+            "name": "Get events for a specific Boost",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/boosts/:id/activity",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "BoostID in format chainId:boostCoreAddress:identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "claimant",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a history of claimed incentives"
+        },
+        {
+          "info": {
+            "name": "Get details for a Boost",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/boosts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "BoostID in format chainId:boostCoreAddress:identifier"
+              }
+            ]
+          },
+          "docs": "Return detailed information about a Boost, including budget, allowlist, incentives, actions, and token metadata"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Budget by its system ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/budget-accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID in format chainId:identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a Budget Account, including contract address, chain ID, owner address, label, and members if applicable."
+        },
+        {
+          "info": {
+            "name": "Get Budgets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.boost.xyz/budget-accounts",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "member",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Accepts pagination, and filter options like owner address, chain ID, and permissioned member address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
