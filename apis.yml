@@ -9,6 +9,18 @@ description: >-
   reward primitives, a public read-only Boost V2 REST API, a TypeScript SDK, a CLI,
   and a published MCP server. Founded by Ido Ben-Natan and Raz Niv and backed by
   Electric Capital and Greylock.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
