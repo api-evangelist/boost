@@ -1,14 +1,11 @@
 aid: boost
 name: Boost
-description: >-
-  Boost is a distributed onchain incentives network that lets any team reward any
-  onchain action with any token. Teams define target actions, fund a budget, and
-  deploy campaigns across Base, Optimism, Arbitrum and other EVM chains, then
-  measure ROI and iterate in real time. Boost ships two products — One-Time Actions
-  and Time-Based Incentives (TBI) — plus RewardKit and a Headless SDK for embedding
-  reward primitives, a public read-only Boost V2 REST API, a TypeScript SDK, a CLI,
-  and a published MCP server. Founded by Ido Ben-Natan and Raz Niv and backed by
-  Electric Capital and Greylock.
+description: Boost is a distributed onchain incentives network that lets any team reward any onchain action
+  with any token. Teams define target actions, fund a budget, and deploy campaigns across Base, Optimism,
+  Arbitrum and other EVM chains, then measure ROI and iterate in real time. Boost ships two products —
+  One-Time Actions and Time-Based Incentives (TBI) — plus RewardKit and a Headless SDK for embedding reward
+  primitives, a public read-only Boost V2 REST API, a TypeScript SDK, a CLI, and a published MCP server.
+  Founded by Ido Ben-Natan and Raz Niv and backed by Electric Capital and Greylock.
 deliveryModel:
   model: saas
   open_source: false
@@ -44,7 +41,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-09-16'
 tags:
 - Company
 - Crypto
@@ -93,7 +90,7 @@ apis:
   - type: Documentation
     url: https://docs.boost.xyz/v2/api-reference
 - aid: boost:boost-boost-api
-  name: Boost Boost API
+  name: Boost API
   description: The Boost API from Boost — 9 operation(s) for boost.
   humanURL: https://docs.boost.xyz/v2/api-reference
   baseURL: https://api-v2.boost.xyz
