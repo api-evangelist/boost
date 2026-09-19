@@ -107,6 +107,8 @@ apis:
   humanURL: https://docs.boost.xyz/v2/api-reference
   baseURL: https://api-v2.boost.xyz
   tags:
+  - Budgets
+  tags_raw:
   - Budget
   properties:
   - type: OpenAPI
