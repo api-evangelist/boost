@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Boost V2 Action RewardKit API
+  title: Boost V2 Reward Kit API
   description: Get Boosts and sign claims for the Boost Validator
   termsOfService: https://rabbithole-assets.s3.amazonaws.com/BoostStudios_Terms_Of_Service.pdf
   contact:

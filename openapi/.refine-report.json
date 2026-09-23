@@ -1,14 +1,7 @@
 {
   "provider": "boost",
   "sources": [
-    "boost-action-api-openapi.yml",
-    "boost-action-template-api-openapi.yml",
-    "boost-blocklist-api-openapi.yml",
-    "boost-boost-api-openapi.yml",
-    "boost-budget-api-openapi.yml",
-    "boost-contract-api-openapi.yml",
-    "boost-rewardkit-api-openapi.yml",
-    "boost-rewardkittrending-api-openapi.yml"
+    "_original/boost-v2-openapi.json"
   ],
   "outputs": [
     "boost-action-api-openapi.yml",
@@ -23,6 +16,28 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "boost-v2-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "boost-v2-openapi.json: tagged paths GET /blocklist/:chainId/:tokenAddress -> Blocklist",
+    "boost-v2-openapi.json: declared missing tag: Action",
+    "boost-v2-openapi.json: declared missing tag: Action Template",
+    "boost-v2-openapi.json: declared missing tag: Blocklist",
+    "boost-v2-openapi.json: declared missing tag: Boost",
+    "boost-v2-openapi.json: declared missing tag: Budget",
+    "boost-v2-openapi.json: declared missing tag: Contract",
+    "boost-v2-openapi.json: declared missing tag: RewardKit",
+    "boost-v2-openapi.json: declared missing tag: RewardKitTrending",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "boost-action-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-action-template-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-blocklist-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-boost-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-budget-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-contract-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-rewardkit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "boost-rewardkittrending-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
