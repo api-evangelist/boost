@@ -55,6 +55,7 @@ tags:
 - DeFi
 - Onchain
 - EVM
+- Loyalty & Incentives
 apis:
 - aid: boost:boost-action-api
   name: Boost Action API
