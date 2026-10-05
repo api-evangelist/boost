@@ -1,0 +1,12 @@
+{
+ "url": "https://api-v2.boost.xyz/openapi.json",
+ "requested_url": "https://api-v2.boost.xyz/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=UTF-8",
+ "bytes": 230892,
+ "sha256": "862327728d22e1c774d04b45a505261cbe4b36728b0dc621b5ef74f9e292fe44",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
