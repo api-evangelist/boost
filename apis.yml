@@ -47,6 +47,17 @@ x-docs-platform-confidence: medium
 x-docs-platform-checked: 2026-09-20
 tags:
 - Company
+- Cryptocurrency
+- Web3
+- Incentives
+- Rewards
+- Blockchain
+- DeFi
+- Onchain
+- EVM
+- Loyalty & Incentives
+tags_raw:
+- Company
 - Crypto
 - Web3
 - Incentives
@@ -87,6 +98,8 @@ apis:
   humanURL: https://docs.boost.xyz/v2/api-reference
   baseURL: https://api-v2.boost.xyz
   tags:
+  - Blacklist
+  tags_raw:
   - Blocklist
   properties:
   - type: OpenAPI
