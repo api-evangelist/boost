@@ -210,3 +210,9 @@ paths:
                   - name
                   - stats
                   description: An object containing details about a smart contract used in Boosts known to the system
+x-provenance:
+  method: harvested
+  publisher: Boost
+  source: https://api-v2.boost.xyz/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
